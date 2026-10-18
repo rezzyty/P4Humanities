@@ -1,0 +1,6 @@
+{
+  "name": "Cyber Earth: 小四常識地球防衛戰",
+  "description": "專為小四學生設計的賽博科技風常識線上特訓，涵蓋第1課至第5課完整題庫（判斷題、配對題、排序題、選擇題、填充題、供詞填充題）。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
