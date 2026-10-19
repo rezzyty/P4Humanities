@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, Shield, Award, BookOpen, AlertTriangle, User, Zap } from 'lucide-react';
+import { Volume2, VolumeX, Shield, Award, BookOpen, AlertTriangle, User, Zap, Smartphone, Monitor } from 'lucide-react';
 import { UserStats } from '../types';
 import { sound } from '../utils/audio';
 
@@ -11,6 +11,8 @@ interface CyberHeaderProps {
   onOpenBadges: () => void;
   onGoHome: () => void;
   currentTitle?: string;
+  deviceMode: 'desktop' | 'mobile';
+  onToggleDeviceMode: () => void;
 }
 
 const AVATARS = [
@@ -28,6 +30,8 @@ export const CyberHeader: React.FC<CyberHeaderProps> = ({
   onOpenBadges,
   onGoHome,
   currentTitle,
+  deviceMode,
+  onToggleDeviceMode,
 }) => {
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
@@ -250,6 +254,23 @@ export const CyberHeader: React.FC<CyberHeaderProps> = ({
               className="p-1.5 rounded-lg border border-slate-700 bg-slate-900 hover:border-purple-500/50 hover:bg-purple-950/40 text-purple-300 transition-all"
             >
               <Award className="h-4 w-4" />
+            </button>
+
+            {/* Device Mode Toggle */}
+            <button
+              onClick={() => {
+                sound.playClick();
+                onToggleDeviceMode();
+              }}
+              title={deviceMode === 'desktop' ? '切換為手機裝置模式 (大字體與手機版面)' : '切換為桌面版模式'}
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-mono transition-all ${
+                deviceMode === 'mobile'
+                  ? 'border-cyan-400 bg-cyan-950/80 text-cyan-300 shadow-[0_0_10px_rgba(6,182,212,0.4)]'
+                  : 'border-slate-700 bg-slate-900 text-slate-300 hover:border-cyan-500/50'
+              }`}
+            >
+              {deviceMode === 'mobile' ? <Smartphone className="h-4 w-4 text-cyan-400 animate-pulse" /> : <Monitor className="h-4 w-4" />}
+              <span className="hidden sm:inline">{deviceMode === 'mobile' ? '手機版' : '桌面版'}</span>
             </button>
 
             {/* Sound Toggle */}

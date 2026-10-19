@@ -136,6 +136,7 @@ export default function App() {
   const [currentView, setCurrentView] = useState<'dashboard' | 'exercise'>('dashboard');
   const [activeChapter, setActiveChapter] = useState<ChapterNumber>(4);
   const [activeCategory, setActiveCategory] = useState<ExerciseCategory>('H4a_u2_01選擇題_知識');
+  const [deviceMode, setDeviceMode] = useState<'desktop' | 'mobile'>('desktop');
 
   // Modals state
   const [isNotesOpen, setIsNotesOpen] = useState(false);
@@ -232,7 +233,19 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen cyber-grid-bg text-slate-100 flex flex-col font-sans">
+    <div className={`min-h-screen cyber-grid-bg text-slate-100 flex flex-col font-sans ${deviceMode === 'mobile' ? 'mobile-device-mode' : ''}`}>
+      {deviceMode === 'mobile' && (
+        <div className="bg-cyan-950/90 border-b border-cyan-500/40 px-4 py-1.5 text-center text-xs font-mono text-cyan-300 flex items-center justify-center gap-2">
+          <span>📱 手機裝置模式已啟動（大字體與直式排版）</span>
+          <button
+            onClick={() => setDeviceMode('desktop')}
+            className="underline text-cyan-400 hover:text-cyan-200 font-semibold"
+          >
+            切回桌面版
+          </button>
+        </div>
+      )}
+
       {/* Top Cyber HUD Header */}
       <CyberHeader
         stats={stats}
@@ -252,6 +265,8 @@ export default function App() {
             ? `第${activeChapter}課 - ${activeCategory.split('_')[1]}`
             : undefined
         }
+        deviceMode={deviceMode}
+        onToggleDeviceMode={() => setDeviceMode(m => m === 'desktop' ? 'mobile' : 'desktop')}
       />
 
       {/* Main Container */}

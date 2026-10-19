@@ -114,3 +114,22 @@
   background: #0891b2;
 }
 
+/* Mobile device mode larger fonts & layout optimization */
+.mobile-device-mode {
+  font-size: 1.1rem;
+}
+.mobile-device-mode h1 {
+  font-size: 1.75rem !important;
+}
+.mobile-device-mode h2 {
+  font-size: 1.5rem !important;
+}
+.mobile-device-mode h3 {
+  font-size: 1.25rem !important;
+}
+.mobile-device-mode button, 
+.mobile-device-mode input, 
+.mobile-device-mode label {
+  font-size: 1.05rem !important;
+}
+
