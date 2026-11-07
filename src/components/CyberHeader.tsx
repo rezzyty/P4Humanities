@@ -148,7 +148,7 @@ export const CyberHeader: React.FC<CyberHeaderProps> = ({
             <Compass className="h-4 w-4" />
             <span>冒險征途</span>
             <span className="px-1.5 py-0.2 rounded-full bg-amber-400/30 text-[9px] font-mono font-bold">
-              全章節
+              5大關卡
             </span>
           </button>
         </div>

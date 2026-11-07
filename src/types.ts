@@ -47,9 +47,9 @@ export interface TestHistoryRecord {
 }
 
 export interface JourneyStageProgress {
-  unlockedStage: number; // 1 to 6
-  stageStars: Record<number, number>; // stage (1..6) -> stars earned (0..3)
-  stageHighScores: Record<number, number>; // stage (1..6) -> score percentage (0..100)
+  unlockedStage: number; // 1 to 5 (Stages 1..5, excluding Chapter 2)
+  stageStars: Record<number, number>; // stage (1..5) -> stars earned (0..3)
+  stageHighScores: Record<number, number>; // stage (1..5) -> score percentage (0..100)
 }
 
 export interface UserStats {

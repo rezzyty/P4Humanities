@@ -69,10 +69,10 @@ export const JourneyMode: React.FC<JourneyModeProps> = ({
             </div>
 
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-wide mb-2 flex items-center gap-2.5">
-              <span>🗺️ 小四常識 全章節冒險征途</span>
+              <span>🗺️ 小四常識 冒險征途（涵蓋第1、3、4、5課）</span>
             </h2>
             <p className="text-sm text-slate-700 dark:text-slate-300 max-w-xl leading-relaxed">
-              為 <strong>{stats.playerName}</strong> 量身打造的循序漸進全單元總復習！從第1課地圖考察，逐步過關斬將至全單元跨章終極大會戰，收集 18 顆守護者星章！
+              為 <strong>{stats.playerName}</strong> 量身打造的循序漸進總復習！涵蓋第1、3、4、5課，過關斬將至跨章終極大會戰，收集 {JOURNEY_STAGES.length * 3} 顆守護者星章！
             </p>
           </div>
 
@@ -82,14 +82,14 @@ export const JourneyMode: React.FC<JourneyModeProps> = ({
               <div className="text-[11px] font-mono text-slate-500 dark:text-slate-400">征途星章</div>
               <div className="text-2xl font-black text-amber-500 flex items-center justify-center gap-1">
                 <Star className="h-5 w-5 fill-amber-500" />
-                <span>{totalStarsEarned} / 18</span>
+                <span>{totalStarsEarned} / {JOURNEY_STAGES.length * 3}</span>
               </div>
             </div>
 
             <div className="text-center px-3 border-r border-slate-200 dark:border-slate-800">
               <div className="text-[11px] font-mono text-slate-500 dark:text-slate-400">已解鎖關卡</div>
               <div className="text-2xl font-black text-sky-600 dark:text-cyan-400">
-                {Math.min(6, unlockedStage)} / 6
+                {Math.min(JOURNEY_STAGES.length, unlockedStage)} / {JOURNEY_STAGES.length}
               </div>
             </div>
 
@@ -109,22 +109,22 @@ export const JourneyMode: React.FC<JourneyModeProps> = ({
         {/* Global Progress Bar */}
         <div className="mt-6 pt-4 border-t border-slate-200/80 dark:border-slate-800/80 flex items-center gap-3">
           <span className="text-xs font-mono font-bold text-slate-600 dark:text-slate-400 flex-shrink-0">
-            征途完成度：{Math.round((totalStarsEarned / 18) * 100)}%
+            征途完成度：{Math.round((totalStarsEarned / (JOURNEY_STAGES.length * 3)) * 100)}%
           </span>
           <div className="flex-1 h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-emerald-500 transition-all duration-500 shadow-sm"
-              style={{ width: `${Math.min(100, (totalStarsEarned / 18) * 100)}%` }}
+              style={{ width: `${Math.min(100, (totalStarsEarned / (JOURNEY_STAGES.length * 3)) * 100)}%` }}
             />
           </div>
         </div>
       </div>
 
-      {/* 6 Stage Nodes Map */}
+      {/* Stage Nodes Map */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <span>征途關卡航道圖 (STAGES 1 - 6)</span>
+            <span>征途關卡航道圖 (STAGES 1 - {JOURNEY_STAGES.length})</span>
           </h3>
           <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
             每關答對 60% 即可解鎖下一關卡
@@ -136,7 +136,7 @@ export const JourneyMode: React.FC<JourneyModeProps> = ({
             const isUnlocked = unlockedStage >= st.stageId;
             const stars = stageStars[st.stageId] || 0;
             const bestScore = stageHighScores[st.stageId];
-            const isBoss = st.stageId === 6;
+            const isBoss = st.stageId === JOURNEY_STAGES.length;
 
             return (
               <div
