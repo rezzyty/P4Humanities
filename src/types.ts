@@ -68,5 +68,7 @@ export interface UserStats {
   journeyProgress: JourneyStageProgress;
   unlockedRewards: string[]; // reward item IDs
   testHistory: TestHistoryRecord[];
+  unlockedMedals?: string[]; // IDs of unlocked Transformer medals
+  activeMedalId?: string; // ID of currently equipped Transformer medal
 }
 

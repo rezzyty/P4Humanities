@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Globe2, AlertTriangle, CheckCircle, Sparkles, BookOpen, ChevronRight, Filter, Map, Compass, CloudRain } from 'lucide-react';
 import { ExerciseCategory, ChapterNumber, UserStats } from '../types';
+import { getMedalById } from '../data/transformerMedalsData';
 import { sound } from '../utils/audio';
 import {
   CHAP4_CHOICE_QUESTIONS,
@@ -510,7 +511,7 @@ export const ChapterDashboard: React.FC<ChapterDashboardProps> = ({
             </h2>
 
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6 dark:text-slate-300">
-              特工 <strong className="text-sky-600 dark:text-cyan-400">{stats.playerName}</strong>！本系統已全面上線小四常識單元一《環境與氣候》（第1-3課）與單元二《地球是我家》（第4-5課），每課皆包含完整的【判斷題】、【配對題】與【排序題】專屬訓練模組！
+              特工 <strong className="text-sky-600 dark:text-cyan-400">{stats.playerName}</strong>！守護金剛代表 <strong className="text-red-600 dark:text-red-400 font-bold">{getMedalById(stats.activeMedalId || 'bumblebee')?.name || '大黃蜂'}</strong> 已同步出擊支援。本系統已全面上線小四常識單元一《環境與氣候》（第1-3課）與單元二《地球是我家》（第4-5課），每課皆包含完整的【判斷題】、【配對題】與【排序題】專屬訓練模組！
             </p>
 
             <div className="flex flex-wrap items-center gap-3">

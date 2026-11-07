@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, UserCheck, Shield, Zap, Star, Gem, AlertTriangle, CheckCircle2, Edit3, ArrowRight } from 'lucide-react';
 import { AccountId, UserStats } from '../types';
 import { ACCOUNTS_CONFIG, AccountMetadata } from '../utils/accountManager';
+import { getMedalById } from '../data/transformerMedalsData';
 import { sound } from '../utils/audio';
 
 interface AccountSwitcherModalProps {
@@ -90,6 +91,7 @@ export const AccountSwitcherModal: React.FC<AccountSwitcherModalProps> = ({
               const cfg = ACCOUNTS_CONFIG[accId];
               const userStat = accounts[accId];
               const isActive = accId === activeAccountId;
+              const equippedMedal = getMedalById(userStat.activeMedalId || (accId === 'jayden' ? 'jazz' : accId === 'melaine' ? 'arcee' : 'bumblebee'));
 
               return (
                 <div
@@ -169,6 +171,16 @@ export const AccountSwitcherModal: React.FC<AccountSwitcherModalProps> = ({
                         </span>
                         <span className="font-bold text-sky-600 dark:text-cyan-400">
                           {userStat.crystals || 0} 💎
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+                        <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                          <span className="text-xs">{equippedMedal?.icon || '🤖'}</span>
+                          <span>金剛勳章</span>
+                        </span>
+                        <span className="font-bold text-red-600 dark:text-red-400">
+                          {equippedMedal?.name.split(' ')[0] || '金剛'} ({(userStat.unlockedMedals || []).length}/24)
                         </span>
                       </div>
 

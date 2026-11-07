@@ -14,8 +14,10 @@ import { MatchingExercise } from './components/MatchingExercise';
 import { OrderingExercise } from './components/OrderingExercise';
 import { AccountSwitcherModal } from './components/AccountSwitcherModal';
 import { RewardCenterModal } from './components/RewardCenterModal';
+import { TransformersMedalModal } from './components/TransformersMedalModal';
 import { JourneyMode } from './components/JourneyMode';
 import { loadAllAccounts, saveAllAccounts, getActiveAccountId, setActiveAccountId } from './utils/accountManager';
+import { getMedalById } from './data/transformerMedalsData';
 import { sound } from './utils/audio';
 
 import {
@@ -147,6 +149,7 @@ export default function App() {
   const [isBadgesOpen, setIsBadgesOpen] = useState(false);
   const [isAccountSwitcherOpen, setIsAccountSwitcherOpen] = useState(false);
   const [isRewardCenterOpen, setIsRewardCenterOpen] = useState(false);
+  const [isMedalModalOpen, setIsMedalModalOpen] = useState(false);
 
   const [reportData, setReportData] = useState<{
     score: number;
@@ -388,6 +391,7 @@ export default function App() {
         onOpenBadges={() => setIsBadgesOpen(true)}
         onOpenAccountSwitcher={() => setIsAccountSwitcherOpen(true)}
         onOpenRewardCenter={() => setIsRewardCenterOpen(true)}
+        onOpenMedals={() => setIsMedalModalOpen(true)}
         onGoHome={() => {
           setReportData(null);
           setCurrentView('dashboard');
@@ -517,6 +521,13 @@ export default function App() {
         onUpdateStats={handleUpdateStats}
       />
 
+      <TransformersMedalModal
+        isOpen={isMedalModalOpen}
+        onClose={() => setIsMedalModalOpen(false)}
+        stats={stats}
+        onUpdateStats={handleUpdateStats}
+      />
+
       <StudyNotesModal
         isOpen={isNotesOpen}
         onClose={() => setIsNotesOpen(false)}
@@ -564,7 +575,7 @@ export default function App() {
             CYBER EARTH DEFENDER // 香港小學四年級 常識科特訓作戰系統
           </div>
           <div className="text-sky-600 font-semibold dark:text-cyan-400/80">
-            目前指揮官：{stats.playerName}（{stats.title}）| 晶石：{stats.crystals || 0} 💎 | 星章：{stats.stars || 0} ★
+            目前指揮官：{stats.playerName}（{stats.title}）| 守護金剛：{getMedalById(stats.activeMedalId || 'bumblebee')?.name.split(' ')[0] || '大黃蜂'} | 晶石：{stats.crystals || 0} 💎 | 星章：{stats.stars || 0} ★
           </div>
         </div>
       </footer>

@@ -42,6 +42,9 @@ export const ACCOUNTS_CONFIG: Record<AccountId, AccountMetadata> = {
 
 export const createInitialStats = (id: AccountId): UserStats => {
   const meta = ACCOUNTS_CONFIG[id];
+  const defaultMedals = id === 'jayden' ? ['jazz', 'bumblebee'] : id === 'melaine' ? ['arcee', 'bumblebee'] : ['bumblebee'];
+  const defaultActiveMedal = id === 'jayden' ? 'jazz' : id === 'melaine' ? 'arcee' : 'bumblebee';
+
   return {
     accountId: id,
     playerName: meta.name,
@@ -50,7 +53,7 @@ export const createInitialStats = (id: AccountId): UserStats => {
     exp: 0,
     level: 1,
     stars: 0,
-    crystals: 60, // 初始贈送 60 能量晶石
+    crystals: 80, // 初始贈送 80 能量晶石
     soundEnabled: true,
     completedExercises: {},
     wrongQuestions: [],
@@ -61,6 +64,8 @@ export const createInitialStats = (id: AccountId): UserStats => {
       stageHighScores: {},
     },
     unlockedRewards: id === 'jayden' ? ['title_pioneer'] : id === 'melaine' ? ['title_commander'] : ['title_rookie'],
+    unlockedMedals: defaultMedals,
+    activeMedalId: defaultActiveMedal,
     testHistory: [],
   };
 };
@@ -83,6 +88,29 @@ export const loadAllAccounts = (): Record<AccountId, UserStats> => {
       if (!result.melaine.playerName || result.melaine.playerName === 'CYBER-P4') {
         result.melaine.playerName = 'Melaine';
       }
+
+      // Ensure Transformer medals are present
+      if (!result.jayden.unlockedMedals || result.jayden.unlockedMedals.length === 0) {
+        result.jayden.unlockedMedals = ['jazz', 'bumblebee'];
+      }
+      if (!result.jayden.activeMedalId) {
+        result.jayden.activeMedalId = 'jazz';
+      }
+
+      if (!result.melaine.unlockedMedals || result.melaine.unlockedMedals.length === 0) {
+        result.melaine.unlockedMedals = ['arcee', 'bumblebee'];
+      }
+      if (!result.melaine.activeMedalId) {
+        result.melaine.activeMedalId = 'arcee';
+      }
+
+      if (!result.others.unlockedMedals || result.others.unlockedMedals.length === 0) {
+        result.others.unlockedMedals = ['bumblebee'];
+      }
+      if (!result.others.activeMedalId) {
+        result.others.activeMedalId = 'bumblebee';
+      }
+
       saveAllAccounts(result);
       return result;
     }
@@ -112,9 +140,11 @@ export const loadAllAccounts = (): Record<AccountId, UserStats> => {
         stageHighScores: {},
       },
       unlockedRewards: (legacyStats as any)?.unlockedRewards || ['title_pioneer'],
+      unlockedMedals: (legacyStats as any)?.unlockedMedals || ['jazz', 'bumblebee'],
+      activeMedalId: (legacyStats as any)?.activeMedalId || 'jazz',
       testHistory: (legacyStats as any)?.testHistory || [],
       stars: (legacyStats as any)?.stars || 0,
-      crystals: (legacyStats as any)?.crystals || 60,
+      crystals: (legacyStats as any)?.crystals || 80,
     },
     melaine: createInitialStats('melaine'),
     others: createInitialStats('others'),

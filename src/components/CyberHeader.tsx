@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Volume2, VolumeX, Shield, Award, BookOpen, AlertTriangle, User, Zap, Smartphone, Monitor, Tablet, Sun, Moon, Gem, Star, Gift, Compass, Users } from 'lucide-react';
 import { UserStats, DeviceMode, ThemeMode, MainNavMode, AccountId } from '../types';
 import { ACCOUNTS_CONFIG } from '../utils/accountManager';
+import { getMedalById } from '../data/transformerMedalsData';
 import { sound } from '../utils/audio';
 
 interface CyberHeaderProps {
@@ -12,6 +13,7 @@ interface CyberHeaderProps {
   onOpenBadges: () => void;
   onOpenAccountSwitcher: () => void;
   onOpenRewardCenter: () => void;
+  onOpenMedals: () => void;
   onGoHome: () => void;
   mainNavMode: MainNavMode;
   onChangeMainNavMode: (mode: MainNavMode) => void;
@@ -42,6 +44,7 @@ export const CyberHeader: React.FC<CyberHeaderProps> = ({
   onOpenBadges,
   onOpenAccountSwitcher,
   onOpenRewardCenter,
+  onOpenMedals,
   onGoHome,
   mainNavMode,
   onChangeMainNavMode,
@@ -53,6 +56,8 @@ export const CyberHeader: React.FC<CyberHeaderProps> = ({
 }) => {
   const currentAvatarObj = AVATARS.find((a) => a.id === stats.avatar) || AVATARS[0];
   const accountCfg = ACCOUNTS_CONFIG[stats.accountId || 'jayden'] || ACCOUNTS_CONFIG.jayden;
+  const activeMedal = getMedalById(stats.activeMedalId || 'bumblebee');
+  const unlockedMedalsCount = (stats.unlockedMedals || ['bumblebee']).length;
 
   const handleToggleSound = () => {
     const nextSound = !stats.soundEnabled;
@@ -197,6 +202,29 @@ export const CyberHeader: React.FC<CyberHeaderProps> = ({
             </div>
             <span className="text-[11px] font-sans font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded-md">
               獎勵所
+            </span>
+          </button>
+
+          {/* Transformers Medals Hub Button */}
+          <button
+            onClick={() => {
+              sound.playClick();
+              onOpenMedals();
+            }}
+            title="變形金剛塞伯坦勳章榮譽館（點擊開啟，包含雅詩、爵士等 24 款全系列）"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl border border-red-300 hover:border-red-500 bg-red-50/90 hover:bg-red-100 dark:border-red-500/40 dark:bg-red-950/40 text-xs font-mono font-bold text-red-900 dark:text-red-300 transition-all cursor-pointer shadow-xs min-h-[40px]"
+          >
+            <span className="text-base leading-none">{activeMedal?.icon || '🤖'}</span>
+            <div className="hidden sm:block text-left leading-tight">
+              <div className="text-[10px] text-red-600 dark:text-red-400 font-bold truncate max-w-[85px]">
+                {activeMedal?.characterEn || 'Transformer'}
+              </div>
+              <div className="text-[11px] font-sans font-bold text-slate-800 dark:text-white truncate max-w-[85px]">
+                {activeMedal?.name.split(' ')[0] || '金剛勳章'}
+              </div>
+            </div>
+            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-red-600 text-white font-black">
+              🏅 {unlockedMedalsCount}/24
             </span>
           </button>
 
