@@ -51,80 +51,80 @@ export const ReportModal: React.FC<ReportModalProps> = ({
   const expEarned = score * 20 + (percentage === 100 ? 100 : 0);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
-      <div className="relative w-full max-w-lg rounded-2xl border border-cyan-500/50 bg-slate-900/95 p-6 sm:p-8 shadow-[0_0_60px_rgba(6,182,212,0.3)] text-center overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 dark:bg-slate-950/85 backdrop-blur-sm">
+      <div className="relative w-full max-w-lg rounded-2xl border border-slate-200 dark:border-cyan-500/50 bg-white dark:bg-slate-900/95 p-6 sm:p-8 shadow-2xl text-center overflow-hidden">
         {/* Glow backdrop */}
-        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-64 h-64 bg-sky-500/10 dark:bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="text-xs font-mono text-cyan-400 mb-2">
+        <div className="text-xs font-mono font-semibold text-sky-600 dark:text-cyan-400 mb-2">
           // MISSION DEBRIEFING REPORT COMPLETED
         </div>
 
-        <h2 className="text-xl sm:text-2xl font-black text-white tracking-wide mb-1">
+        <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-wide mb-1">
           {CHAPTER_TITLES[chapter] || `第${chapter}課`} 特訓完成！
         </h2>
-        <p className="text-xs font-mono text-slate-400 mb-6">{category}</p>
+        <p className="text-xs font-mono text-slate-500 dark:text-slate-400 mb-6">{category}</p>
 
         {/* Grade Badge */}
         <div className="inline-block relative my-2">
           <div
-            className={`w-28 h-28 mx-auto rounded-2xl border-4 ${grade.border} bg-slate-950/80 flex flex-col items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.3)]`}
+            className={`w-28 h-28 mx-auto rounded-2xl border-4 ${grade.border} bg-slate-50 dark:bg-slate-950/80 flex flex-col items-center justify-center shadow-md`}
           >
             <span className={`text-4xl sm:text-5xl font-black font-mono ${grade.color}`}>
               {grade.letter}
             </span>
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest mt-1">
+            <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-1">
               RANK
             </span>
           </div>
         </div>
 
-        <div className={`text-sm font-bold mt-2 ${grade.color}`}>{grade.title}</div>
+        <div className={`text-base font-bold mt-2 ${grade.color}`}>{grade.title}</div>
 
         {/* Statistics Grid */}
         <div className="grid grid-cols-3 gap-3 my-6 font-mono text-xs">
-          <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-            <span className="text-slate-400 block mb-1">精確答對</span>
-            <span className="text-emerald-400 font-bold text-lg">
+          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xs">
+            <span className="text-slate-500 dark:text-slate-400 block mb-1">精確答對</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-bold text-xl">
               {score} / {total}
             </span>
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-            <span className="text-slate-400 block mb-1">準確率</span>
-            <span className="text-cyan-400 font-bold text-lg">{percentage}%</span>
+          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xs">
+            <span className="text-slate-500 dark:text-slate-400 block mb-1">準確率</span>
+            <span className="text-sky-600 dark:text-cyan-400 font-bold text-xl">{percentage}%</span>
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-            <span className="text-slate-400 block mb-1">獲得 EXP</span>
-            <span className="text-amber-400 font-bold text-lg flex items-center justify-center gap-0.5">
+          <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xs">
+            <span className="text-slate-500 dark:text-slate-400 block mb-1">獲得 EXP</span>
+            <span className="text-amber-600 dark:text-amber-400 font-bold text-xl flex items-center justify-center gap-0.5">
               <Zap className="h-4 w-4 inline" />+{expEarned}
             </span>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="space-y-2.5">
+        <div className="space-y-3">
           {wrongCount > 0 && (
             <button
               onClick={() => {
                 sound.playClick();
                 onOpenWrongLog();
               }}
-              className="w-full py-3 px-4 rounded-xl border border-amber-500/50 bg-amber-950/40 hover:bg-amber-900/60 text-amber-300 font-bold text-xs font-mono flex items-center justify-center gap-2 transition-all cursor-pointer"
+              className="w-full py-3.5 px-4 rounded-xl border border-amber-300 dark:border-amber-500/50 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 dark:hover:bg-amber-900/60 text-amber-900 dark:text-amber-300 font-bold text-sm font-mono flex items-center justify-center gap-2 transition-all cursor-pointer min-h-[48px] shadow-xs active:scale-[0.98]"
             >
-              <AlertTriangle className="h-4 w-4" />
+              <AlertTriangle className="h-4 w-4 text-amber-600" />
               <span>檢視本次錯題 ({wrongCount} 題)</span>
             </button>
           )}
 
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <button
               onClick={() => {
                 sound.playClick();
                 onRetry();
               }}
-              className="flex-1 py-3 px-4 rounded-xl border border-slate-700 bg-slate-800 hover:border-cyan-400 text-slate-200 font-bold text-xs font-mono flex items-center justify-center gap-2 transition-all cursor-pointer"
+              className="flex-1 py-3.5 px-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:border-sky-400 text-slate-800 dark:text-slate-200 font-bold text-sm font-mono flex items-center justify-center gap-2 transition-all cursor-pointer min-h-[48px] active:scale-[0.98]"
             >
               <RotateCcw className="h-4 w-4" />
               <span>重新特訓 (RETRY)</span>
@@ -135,7 +135,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                 sound.playClick();
                 onGoHome();
               }}
-              className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-xs font-mono flex items-center justify-center gap-2 hover:brightness-110 shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all cursor-pointer"
+              className="flex-1 py-3.5 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold text-sm font-mono flex items-center justify-center gap-2 hover:brightness-105 shadow-md transition-all cursor-pointer min-h-[48px] active:scale-[0.98]"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>返回作戰總部</span>

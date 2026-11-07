@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { UserStats, ChapterNumber, ExerciseCategory } from './types';
+import { UserStats, ChapterNumber, ExerciseCategory, DeviceMode, ThemeMode, AccountId, MainNavMode, WrongQuestionRecord } from './types';
 import { CyberHeader } from './components/CyberHeader';
 import { ChapterDashboard } from './components/ChapterDashboard';
 import { MultipleChoiceExercise } from './components/MultipleChoiceExercise';
@@ -12,6 +12,10 @@ import { RankBadgesModal } from './components/RankBadgesModal';
 import { ReportModal } from './components/ReportModal';
 import { MatchingExercise } from './components/MatchingExercise';
 import { OrderingExercise } from './components/OrderingExercise';
+import { AccountSwitcherModal } from './components/AccountSwitcherModal';
+import { RewardCenterModal } from './components/RewardCenterModal';
+import { JourneyMode } from './components/JourneyMode';
+import { loadAllAccounts, saveAllAccounts, getActiveAccountId, setActiveAccountId } from './utils/accountManager';
 import { sound } from './utils/audio';
 
 import {
@@ -51,18 +55,6 @@ import {
   CHAP3_ORDERING_QUESTIONS,
 } from './data/unit1QuestionsData';
 
-const LOCAL_STORAGE_KEY = 'cyber_earth_defender_p4_data_v1';
-
-const INITIAL_STATS: UserStats = {
-  playerName: 'CYBER-P4',
-  avatar: 'mecha_pilot',
-  exp: 0,
-  level: 1,
-  soundEnabled: true,
-  completedExercises: {},
-  wrongQuestions: [],
-  streak: 0,
-};
 
 const getChoiceQuestions = (ch: ChapterNumber) => {
   switch (ch) {
@@ -125,24 +117,37 @@ const getOrderingQuestions = (ch: ChapterNumber) => {
 };
 
 export default function App() {
-  const [stats, setStats] = useState<UserStats>(() => {
-    try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved) return JSON.parse(saved);
-    } catch {}
-    return INITIAL_STATS;
-  });
+  const [accounts, setAccounts] = useState<Record<AccountId, UserStats>>(() => loadAllAccounts());
+  const [activeAccountId, setActiveAccountIdState] = useState<AccountId>(() => getActiveAccountId());
+  const stats = accounts[activeAccountId] || accounts.jayden;
 
+  const [mainNavMode, setMainNavMode] = useState<MainNavMode>('exercise');
   const [currentView, setCurrentView] = useState<'dashboard' | 'exercise'>('dashboard');
   const [activeChapter, setActiveChapter] = useState<ChapterNumber>(4);
   const [activeCategory, setActiveCategory] = useState<ExerciseCategory>('H4a_u2_01選擇題_知識');
-  const [deviceMode, setDeviceMode] = useState<'desktop' | 'mobile'>('desktop');
+  const [deviceMode, setDeviceMode] = useState<DeviceMode>(() => {
+    try {
+      const saved = localStorage.getItem('cyber_earth_device_mode');
+      if (saved === 'desktop' || saved === 'ipad' || saved === 'mobile') return saved;
+    } catch {}
+    return 'ipad';
+  });
+  const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
+    try {
+      const saved = localStorage.getItem('cyber_earth_theme_mode');
+      if (saved === 'bright' || saved === 'dark') return saved;
+    } catch {}
+    return 'bright';
+  });
 
   // Modals state
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [notesChapter, setNotesChapter] = useState<ChapterNumber>(4);
   const [isWrongLogOpen, setIsWrongLogOpen] = useState(false);
   const [isBadgesOpen, setIsBadgesOpen] = useState(false);
+  const [isAccountSwitcherOpen, setIsAccountSwitcherOpen] = useState(false);
+  const [isRewardCenterOpen, setIsRewardCenterOpen] = useState(false);
+
   const [reportData, setReportData] = useState<{
     score: number;
     total: number;
@@ -151,28 +156,58 @@ export default function App() {
     wrongCount: number;
   } | null>(null);
 
+  // Sync theme with HTML documentElement
+  useEffect(() => {
+    if (themeMode === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    try {
+      localStorage.setItem('cyber_earth_theme_mode', themeMode);
+    } catch {}
+  }, [themeMode]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('cyber_earth_device_mode', deviceMode);
+    } catch {}
+  }, [deviceMode]);
+
   // Sync sound muted state with stats
   useEffect(() => {
     sound.setMuted(!stats.soundEnabled);
   }, [stats.soundEnabled]);
 
-  // Persist stats in localStorage
-  useEffect(() => {
-    try {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stats));
-    } catch {}
-  }, [stats]);
-
   const handleUpdateStats = (newPartial: Partial<UserStats>) => {
-    setStats((prev) => {
-      const updated = { ...prev, ...newPartial };
+    setAccounts((prev) => {
+      const current = prev[activeAccountId];
+      const updated = { ...current, ...newPartial };
       // Check level up: 1 level per 100 EXP
       const newLevel = Math.max(1, Math.floor(updated.exp / 100) + 1);
-      if (newLevel > prev.level) {
+      if (newLevel > current.level) {
         sound.playVictory();
       }
-      return { ...updated, level: newLevel };
+      const result: Record<AccountId, UserStats> = {
+        ...prev,
+        [activeAccountId]: { ...updated, level: newLevel },
+      };
+      saveAllAccounts(result);
+      return result;
     });
+  };
+
+  const handleSwitchAccount = (newId: AccountId) => {
+    sound.playVictory();
+    setActiveAccountIdState(newId);
+    setActiveAccountId(newId);
+    setCurrentView('dashboard');
+    setReportData(null);
+    setIsAccountSwitcherOpen(false);
+  };
+
+  const handleUpdateActiveAccountName = (newName: string) => {
+    handleUpdateStats({ playerName: newName });
   };
 
   const handleStartExercise = (chapter: ChapterNumber, category: ExerciseCategory) => {
@@ -186,7 +221,7 @@ export default function App() {
     const percentage = Math.round((score / total) * 100);
     const exerciseKey = `${activeChapter}_${activeCategory}`;
 
-    // Add wrong items to persistent list without duplicates
+    // Add wrong items to persistent list for active student without duplicates
     const updatedWrongs = [...stats.wrongQuestions];
     wrongItems.forEach((item) => {
       if (!updatedWrongs.some((w) => w.id === item.id)) {
@@ -202,15 +237,32 @@ export default function App() {
     const newBest = Math.max(prevBest, percentage);
 
     const expGain = score * 25 + (percentage === 100 ? 150 : 50);
+    const starEarned = percentage === 100 && prevBest < 100 ? 1 : 0;
+    const crystalsGain = score * 3 + (percentage === 100 ? 30 : 15);
 
     handleUpdateStats({
       exp: stats.exp + expGain,
+      stars: (stats.stars || 0) + starEarned,
+      crystals: (stats.crystals || 0) + crystalsGain,
       completedExercises: {
         ...stats.completedExercises,
         [exerciseKey]: newBest,
       },
       wrongQuestions: updatedWrongs,
       streak: percentage === 100 ? stats.streak + 1 : 0,
+      testHistory: [
+        {
+          id: `ex_${activeChapter}_${Date.now()}`,
+          timestamp: Date.now(),
+          title: `第${activeChapter}課 ${activeCategory.split('_')[1]}`,
+          score,
+          total,
+          percentage,
+          mode: 'free_exercise' as const,
+          chapter: activeChapter,
+        },
+        ...(stats.testHistory || []),
+      ].slice(0, 30),
     });
 
     setReportData({
@@ -219,6 +271,71 @@ export default function App() {
       chapter: activeChapter,
       category: activeCategory,
       wrongCount: wrongItems.length,
+    });
+  };
+
+  const handleFinishJourneyStage = (
+    stageId: number,
+    score: number,
+    total: number,
+    stars: number,
+    wrongItems: any[]
+  ) => {
+    const percentage = Math.round((score / total) * 100);
+    const currentStageStars = stats.journeyProgress?.stageStars || {};
+    const currentHighScores = stats.journeyProgress?.stageHighScores || {};
+    const prevStars = currentStageStars[stageId] || 0;
+    const newStars = Math.max(prevStars, stars);
+    const prevHigh = currentHighScores[stageId] || 0;
+    const newHigh = Math.max(prevHigh, percentage);
+
+    // Unlock next stage if scored >= 60%
+    const curUnlocked = stats.journeyProgress?.unlockedStage || 1;
+    const nextUnlocked = percentage >= 60 ? Math.max(curUnlocked, stageId + 1) : curUnlocked;
+
+    // Add wrong questions to active student's notebook
+    const updatedWrongs = [...stats.wrongQuestions];
+    wrongItems.forEach((item) => {
+      if (!updatedWrongs.some((w) => w.id === item.id)) {
+        updatedWrongs.push({
+          ...item,
+          timestamp: Date.now(),
+        });
+      }
+    });
+
+    const starDelta = Math.max(0, newStars - prevStars);
+    const crystalsEarned = score * 5 + (stars === 3 ? 50 : stars > 0 ? 30 : 10);
+    const expGain = score * 30 + (stars === 3 ? 150 : 50);
+
+    handleUpdateStats({
+      exp: stats.exp + expGain,
+      stars: (stats.stars || 0) + starDelta,
+      crystals: (stats.crystals || 0) + crystalsEarned,
+      wrongQuestions: updatedWrongs,
+      journeyProgress: {
+        unlockedStage: nextUnlocked,
+        stageStars: {
+          ...currentStageStars,
+          [stageId]: newStars,
+        },
+        stageHighScores: {
+          ...currentHighScores,
+          [stageId]: newHigh,
+        },
+      },
+      testHistory: [
+        {
+          id: `journey_${stageId}_${Date.now()}`,
+          timestamp: Date.now(),
+          title: `冒險征途 第${stageId}關`,
+          score,
+          total,
+          percentage,
+          mode: 'journey' as const,
+        },
+        ...(stats.testHistory || []),
+      ].slice(0, 30),
     });
   };
 
@@ -233,15 +350,28 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen cyber-grid-bg text-slate-100 flex flex-col font-sans ${deviceMode === 'mobile' ? 'mobile-device-mode' : ''}`}>
-      {deviceMode === 'mobile' && (
-        <div className="bg-cyan-950/90 border-b border-cyan-500/40 px-4 py-1.5 text-center text-xs font-mono text-cyan-300 flex items-center justify-center gap-2">
-          <span>📱 手機裝置模式已啟動（大字體與直式排版）</span>
+    <div className={`min-h-screen cyber-grid-bg text-slate-800 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 ${
+      deviceMode === 'ipad' ? 'ipad-device-mode' : deviceMode === 'mobile' ? 'mobile-device-mode' : ''
+    }`}>
+      {deviceMode === 'ipad' && (
+        <div className="bg-sky-50 border-b border-sky-200 px-4 py-1.5 text-center text-xs font-mono text-sky-800 flex items-center justify-center gap-2 dark:bg-sky-950/80 dark:border-cyan-500/40 dark:text-cyan-200">
+          <span>📟 iPad 13" 觸控大字體模式已啟用（最適字號與寬大觸控按鈕，方便 Apple Pencil 與手指點選）</span>
           <button
             onClick={() => setDeviceMode('desktop')}
-            className="underline text-cyan-400 hover:text-cyan-200 font-semibold"
+            className="underline text-sky-600 hover:text-sky-800 font-semibold dark:text-cyan-400 dark:hover:text-cyan-200 cursor-pointer"
           >
-            切回桌面版
+            切換為一般桌面版
+          </button>
+        </div>
+      )}
+      {deviceMode === 'mobile' && (
+        <div className="bg-emerald-50 border-b border-emerald-200 px-4 py-1.5 text-center text-xs font-mono text-emerald-800 flex items-center justify-center gap-2 dark:bg-emerald-950/80 dark:border-emerald-500/40 dark:text-emerald-200">
+          <span>📱 手機直式排版模式已啟動</span>
+          <button
+            onClick={() => setDeviceMode('ipad')}
+            className="underline text-emerald-600 hover:text-emerald-800 font-semibold dark:text-emerald-400 cursor-pointer"
+          >
+            切換為 iPad 模式
           </button>
         </div>
       )}
@@ -256,9 +386,17 @@ export default function App() {
         }}
         onOpenWrongLog={() => setIsWrongLogOpen(true)}
         onOpenBadges={() => setIsBadgesOpen(true)}
+        onOpenAccountSwitcher={() => setIsAccountSwitcherOpen(true)}
+        onOpenRewardCenter={() => setIsRewardCenterOpen(true)}
         onGoHome={() => {
           setReportData(null);
           setCurrentView('dashboard');
+        }}
+        mainNavMode={mainNavMode}
+        onChangeMainNavMode={(mode) => {
+          setMainNavMode(mode);
+          setCurrentView('dashboard');
+          setReportData(null);
         }}
         currentTitle={
           currentView === 'exercise'
@@ -266,15 +404,29 @@ export default function App() {
             : undefined
         }
         deviceMode={deviceMode}
-        onToggleDeviceMode={() => setDeviceMode(m => m === 'desktop' ? 'mobile' : 'desktop')}
+        onChangeDeviceMode={(mode) => setDeviceMode(mode)}
+        themeMode={themeMode}
+        onToggleTheme={() => setThemeMode((m) => (m === 'bright' ? 'dark' : 'bright'))}
       />
 
       {/* Main Container */}
       <main className="flex-1">
-        {currentView === 'dashboard' && (
+        {currentView === 'dashboard' && mainNavMode === 'exercise' && (
           <ChapterDashboard
             stats={stats}
             onStartExercise={handleStartExercise}
+            onOpenNotes={(ch) => {
+              setNotesChapter(ch);
+              setIsNotesOpen(true);
+            }}
+          />
+        )}
+
+        {currentView === 'dashboard' && mainNavMode === 'journey' && (
+          <JourneyMode
+            stats={stats}
+            onUpdateJourneyStage={handleFinishJourneyStage}
+            onSwitchToFreeMode={() => setMainNavMode('exercise')}
             onOpenNotes={(ch) => {
               setNotesChapter(ch);
               setIsNotesOpen(true);
@@ -349,6 +501,22 @@ export default function App() {
       </main>
 
       {/* Modals */}
+      <AccountSwitcherModal
+        isOpen={isAccountSwitcherOpen}
+        onClose={() => setIsAccountSwitcherOpen(false)}
+        accounts={accounts}
+        activeAccountId={activeAccountId}
+        onSwitchAccount={handleSwitchAccount}
+        onUpdateActiveAccountName={handleUpdateActiveAccountName}
+      />
+
+      <RewardCenterModal
+        isOpen={isRewardCenterOpen}
+        onClose={() => setIsRewardCenterOpen(false)}
+        stats={stats}
+        onUpdateStats={handleUpdateStats}
+      />
+
       <StudyNotesModal
         isOpen={isNotesOpen}
         onClose={() => setIsNotesOpen(false)}
@@ -378,7 +546,6 @@ export default function App() {
           wrongCount={reportData.wrongCount}
           onRetry={() => {
             setReportData(null);
-            // Trigger exercise re-render by staying in exercise view
           }}
           onGoHome={() => {
             setReportData(null);
@@ -391,16 +558,17 @@ export default function App() {
       )}
 
       {/* Cyber Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950/90 py-4 px-4 text-center text-xs font-mono text-slate-500">
+      <footer className="border-t border-slate-200 bg-white/90 py-4 px-4 text-center text-xs font-mono text-slate-500 dark:border-slate-900 dark:bg-slate-950/90 dark:text-slate-400">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div>
             CYBER EARTH DEFENDER // 香港小學四年級 常識科特訓作戰系統
           </div>
-          <div className="text-cyan-500/80">
-            收錄：第1課至第5課完整特訓題庫（單元一《環境與生活》+ 單元二《地球是我家》）
+          <div className="text-sky-600 font-semibold dark:text-cyan-400/80">
+            目前指揮官：{stats.playerName}（{stats.title}）| 晶石：{stats.crystals || 0} 💎 | 星章：{stats.stars || 0} ★
           </div>
         </div>
       </footer>
     </div>
   );
 }
+

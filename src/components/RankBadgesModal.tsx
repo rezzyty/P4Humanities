@@ -119,19 +119,19 @@ export const RankBadgesModal: React.FC<RankBadgesModalProps> = ({ isOpen, onClos
   const unlockedCount = BADGES.filter((b) => b.isUnlocked(stats)).length;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-      <div className="relative w-full max-w-2xl max-h-[85vh] flex flex-col rounded-2xl border border-purple-500/50 bg-slate-900/95 shadow-[0_0_50px_rgba(168,85,247,0.25)] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm">
+      <div className="relative w-full max-w-2xl max-h-[85vh] flex flex-col rounded-2xl border border-slate-200 dark:border-purple-500/50 bg-white dark:bg-slate-900/95 shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-purple-500/30 px-6 py-4 bg-slate-950/70">
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-purple-500/30 px-6 py-4 bg-slate-50/90 dark:bg-slate-950/70">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-purple-950 border border-purple-500/50 text-purple-400">
+            <div className="p-2.5 rounded-xl bg-purple-100 dark:bg-purple-950 border border-purple-300 dark:border-purple-500/50 text-purple-700 dark:text-purple-400">
               <Award className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-mono text-purple-400">// CYBER ACHIEVEMENT LOG</div>
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+              <div className="text-xs font-mono font-semibold text-purple-600 dark:text-purple-400">// CYBER ACHIEVEMENT LOG</div>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <span>榮譽勳章成就館</span>
-                <span className="text-xs bg-purple-950 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded-full font-mono">
+                <span className="text-xs bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300 border border-purple-300 dark:border-purple-500/40 px-2.5 py-0.5 rounded-full font-mono font-bold">
                   {unlockedCount} / {BADGES.length} 解鎖
                 </span>
               </h2>
@@ -143,7 +143,7 @@ export const RankBadgesModal: React.FC<RankBadgesModalProps> = ({ isOpen, onClos
               sound.playClick();
               onClose();
             }}
-            className="p-1.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-400 hover:text-white hover:border-purple-500 transition-colors cursor-pointer"
+            className="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-400 transition-colors cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center shadow-xs"
           >
             <X className="h-5 w-5" />
           </button>
@@ -157,17 +157,17 @@ export const RankBadgesModal: React.FC<RankBadgesModalProps> = ({ isOpen, onClos
             return (
               <div
                 key={b.id}
-                className={`p-3.5 rounded-xl border flex items-center gap-3.5 transition-all ${
+                className={`p-4 rounded-2xl border flex items-center gap-3.5 transition-all ${
                   unlocked
-                    ? 'border-purple-500/50 bg-purple-950/20 shadow-[0_0_15px_rgba(168,85,247,0.15)]'
-                    : 'border-slate-800 bg-slate-950/40 opacity-50 grayscale'
+                    ? 'border-purple-200 dark:border-purple-500/50 bg-purple-50/70 dark:bg-purple-950/20 shadow-xs'
+                    : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 opacity-50 grayscale'
                 }`}
               >
                 <div
-                  className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl text-2xl border ${
+                  className={`flex h-13 w-13 flex-shrink-0 items-center justify-center rounded-2xl text-2xl border ${
                     unlocked
-                      ? 'border-purple-400 bg-purple-900/40 shadow-[0_0_10px_rgba(168,85,247,0.4)]'
-                      : 'border-slate-800 bg-slate-900 text-slate-600'
+                      ? 'border-purple-300 dark:border-purple-400 bg-white dark:bg-purple-900/40 shadow-xs'
+                      : 'border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-slate-400'
                   }`}
                 >
                   {b.icon}
@@ -175,18 +175,18 @@ export const RankBadgesModal: React.FC<RankBadgesModalProps> = ({ isOpen, onClos
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-1">
-                    <h4 className="font-bold text-sm text-white truncate">{b.name}</h4>
+                    <h4 className="font-bold text-base text-slate-900 dark:text-white truncate">{b.name}</h4>
                     <span
-                      className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
+                      className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
                         unlocked
-                          ? 'bg-purple-950 text-purple-300 border border-purple-500/40'
-                          : 'bg-slate-900 text-slate-500'
+                          ? 'bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300 border border-purple-300 dark:border-purple-500/40'
+                          : 'bg-slate-200 dark:bg-slate-900 text-slate-500'
                       }`}
                     >
                       {unlocked ? 'ACTIVE' : 'LOCKED'}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-400 mt-0.5 leading-snug">{b.desc}</p>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 leading-snug">{b.desc}</p>
                 </div>
               </div>
             );
@@ -194,13 +194,13 @@ export const RankBadgesModal: React.FC<RankBadgesModalProps> = ({ isOpen, onClos
         </div>
 
         {/* Footer */}
-        <div className="border-t border-purple-500/30 px-6 py-3 bg-slate-950/80 flex justify-end">
+        <div className="border-t border-slate-200 dark:border-purple-500/30 px-6 py-4 bg-slate-50/90 dark:bg-slate-950/80 flex justify-end">
           <button
             onClick={() => {
               sound.playClick();
               onClose();
             }}
-            className="px-5 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold font-mono text-xs transition-colors cursor-pointer"
+            className="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold font-mono text-sm transition-colors cursor-pointer min-h-[44px]"
           >
             返回作戰基地 (BACK)
           </button>

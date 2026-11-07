@@ -491,26 +491,26 @@ export const ChapterDashboard: React.FC<ChapterDashboardProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Hero Cyber Mission Briefing Banner */}
-      <div className="relative overflow-hidden rounded-3xl border border-cyan-500/40 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950/40 p-6 sm:p-10 mb-8 shadow-[0_0_50px_rgba(6,182,212,0.15)]">
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="relative overflow-hidden rounded-3xl border border-sky-200 bg-gradient-to-br from-white via-sky-50/70 to-blue-50/80 p-6 sm:p-10 mb-8 shadow-[0_4px_25px_rgba(14,165,233,0.1)] text-slate-800 dark:border-cyan-500/40 dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-cyan-950/40 dark:text-slate-100 dark:shadow-[0_0_50px_rgba(6,182,212,0.15)]">
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-sky-400/10 rounded-full blur-3xl pointer-events-none dark:bg-cyan-500/10" />
+        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none dark:bg-purple-500/10" />
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-400/50 bg-cyan-950/80 text-cyan-300 text-xs font-mono mb-4">
-              <Sparkles className="h-3.5 w-3.5 text-cyan-400 animate-spin" />
-              <span>賽博香港小學常識特訓系統 // 涵蓋第 1 至第 5 課 全題庫</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sky-300 bg-sky-100/90 text-sky-800 text-xs font-mono font-semibold mb-4 dark:border-cyan-400/50 dark:bg-cyan-950/80 dark:text-cyan-300">
+              <Sparkles className="h-3.5 w-3.5 text-sky-600 dark:text-cyan-400" />
+              <span>香港小學常識特訓作戰系統 // 涵蓋第 1 至第 5 課 全題庫</span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight mb-3">
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-3 dark:text-white">
               小四常識地球防衛戰：<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-emerald-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-blue-600 to-teal-600 dark:from-cyan-400 dark:via-sky-300 dark:to-emerald-400">
                 第1至5課 判斷題 ‧ 配對題 ‧ 排序題 ‧ 選擇題 ‧ 填充題
               </span>
             </h2>
 
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed mb-6">
-              特工 <strong className="text-cyan-400">{stats.playerName}</strong>！本系統已全面上線小四常識單元一《環境與氣候》（第1-3課）與單元二《地球是我家》（第4-5課），每課皆包含完整的【判斷題】、【配對題】與【排序題】專屬訓練模組！
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6 dark:text-slate-300">
+              特工 <strong className="text-sky-600 dark:text-cyan-400">{stats.playerName}</strong>！本系統已全面上線小四常識單元一《環境與氣候》（第1-3課）與單元二《地球是我家》（第4-5課），每課皆包含完整的【判斷題】、【配對題】與【排序題】專屬訓練模組！
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
@@ -519,7 +519,7 @@ export const ChapterDashboard: React.FC<ChapterDashboardProps> = ({
                   sound.playClick();
                   onOpenNotes(selectedChap);
                 }}
-                className="px-5 py-2.5 rounded-xl border border-cyan-500/50 bg-cyan-950/70 hover:bg-cyan-900/80 text-cyan-300 font-bold text-xs font-mono flex items-center gap-2 transition-all shadow-[0_0_15px_rgba(6,182,212,0.2)] cursor-pointer"
+                className="px-5 py-3 rounded-xl border border-sky-300 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs font-mono flex items-center gap-2 transition-all shadow-[0_2px_12px_rgba(2,132,199,0.3)] cursor-pointer active:scale-[0.98] dark:border-cyan-500/50 dark:bg-cyan-950/70 dark:hover:bg-cyan-900/80 dark:text-cyan-300"
               >
                 <BookOpen className="h-4 w-4" />
                 <span>開啟第{selectedChap}課作戰筆記</span>
@@ -536,19 +536,19 @@ export const ChapterDashboard: React.FC<ChapterDashboardProps> = ({
                   sound.playClick();
                   setSelectedChap(ch);
                 }}
-                className={`p-2.5 rounded-xl border cursor-pointer transition-all ${
+                className={`p-3 rounded-xl border cursor-pointer transition-all ${
                   selectedChap === ch
-                    ? 'border-cyan-400 bg-cyan-950/60 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
-                    : 'border-slate-800 bg-slate-950/70 hover:border-slate-700'
+                    ? 'border-sky-500 bg-white shadow-md ring-2 ring-sky-400/40 dark:border-cyan-400 dark:bg-cyan-950/60 dark:ring-cyan-400'
+                    : 'border-slate-200 bg-white/70 hover:border-slate-300 text-slate-600 dark:border-slate-800 dark:bg-slate-950/70 dark:text-slate-400 dark:hover:border-slate-700'
                 }`}
               >
-                <div className="flex items-center justify-between text-[11px] mb-1">
-                  <span className="text-slate-400">第{ch}課</span>
-                  <span className="text-cyan-300 font-bold">{getChapCompletion(ch)}%</span>
+                <div className="flex items-center justify-between text-[11px] mb-1.5">
+                  <span className="font-semibold text-slate-700 dark:text-slate-300">第{ch}課</span>
+                  <span className="text-sky-600 font-bold dark:text-cyan-300">{getChapCompletion(ch)}%</span>
                 </div>
-                <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden dark:bg-slate-800">
                   <div
-                    className="h-full bg-cyan-400 transition-all"
+                    className="h-full bg-gradient-to-r from-sky-500 to-emerald-500 transition-all"
                     style={{ width: `${getChapCompletion(ch)}%` }}
                   />
                 </div>
@@ -560,8 +560,8 @@ export const ChapterDashboard: React.FC<ChapterDashboardProps> = ({
 
       {/* Chapter Mission Base Switcher (Tabs for Chapters 1, 2, 3, 4, 5) */}
       <div className="mb-6">
-        <div className="text-xs font-mono text-slate-400 mb-2 px-1">
-          // 請選擇特訓任務基地（第 1 至 5 課）：
+        <div className="text-xs font-mono font-semibold text-slate-500 mb-2.5 px-1 dark:text-slate-400">
+          // 請選擇特訓基地（第 1 至 5 課）：
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {([1, 2, 3, 4, 5] as ChapterNumber[]).map((ch) => {
@@ -575,17 +575,19 @@ export const ChapterDashboard: React.FC<ChapterDashboardProps> = ({
                   sound.playClick();
                   setSelectedChap(ch);
                 }}
-                className={`p-3.5 rounded-2xl border-2 transition-all flex flex-col justify-between text-left cursor-pointer ${
+                className={`p-4 rounded-2xl border-2 transition-all flex flex-col justify-between text-left cursor-pointer active:scale-[0.98] ${
                   isSelected
-                    ? `${meta.ring} bg-slate-900 shadow-[0_0_20px_rgba(6,182,212,0.25)] ring-1 ring-cyan-400`
-                    : 'border-slate-800 bg-slate-900/60 hover:border-slate-700 text-slate-400'
+                    ? 'border-sky-500 bg-white shadow-[0_4px_20px_rgba(14,165,233,0.18)] ring-2 ring-sky-400/50 dark:bg-slate-900 dark:border-cyan-400 dark:ring-cyan-400'
+                    : 'border-slate-200 bg-white/80 hover:border-slate-300 hover:bg-white text-slate-600 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400'
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-mono text-slate-500">{meta.unit}</span>
+                  <span className="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400">{meta.unit}</span>
                   <div
                     className={`p-1.5 rounded-lg ${
-                      isSelected ? 'bg-cyan-500/20 text-cyan-300' : 'bg-slate-800 text-slate-400'
+                      isSelected
+                        ? 'bg-sky-100 text-sky-600 dark:bg-cyan-500/20 dark:text-cyan-300'
+                        : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
                     }`}
                   >
                     {meta.icon}
@@ -593,10 +595,10 @@ export const ChapterDashboard: React.FC<ChapterDashboardProps> = ({
                 </div>
 
                 <div>
-                  <h3 className={`font-bold text-sm ${isSelected ? 'text-white' : 'text-slate-300'}`}>
+                  <h3 className={`font-bold text-sm sm:text-base ${isSelected ? 'text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-300'}`}>
                     {meta.title}
                   </h3>
-                  <p className="text-[11px] text-slate-400 truncate mt-0.5">{meta.subtitle}</p>
+                  <p className="text-[11px] text-slate-500 truncate mt-0.5 dark:text-slate-400">{meta.subtitle}</p>
                 </div>
               </button>
             );
@@ -605,9 +607,9 @@ export const ChapterDashboard: React.FC<ChapterDashboardProps> = ({
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-6 bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-        <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-          <Filter className="h-4 w-4 text-cyan-400" />
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm dark:bg-slate-900/60 dark:border-slate-800">
+        <div className="flex items-center gap-2 text-xs font-mono font-semibold text-slate-600 dark:text-slate-400">
+          <Filter className="h-4 w-4 text-sky-600 dark:text-cyan-400" />
           <span>題型快速篩選：</span>
         </div>
 
@@ -626,10 +628,10 @@ export const ChapterDashboard: React.FC<ChapterDashboardProps> = ({
                 sound.playClick();
                 setSelectedFilter(tab.id as any);
               }}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer active:scale-[0.98] ${
                 selectedFilter === tab.id
-                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-[0_0_10px_rgba(6,182,212,0.4)]'
-                  : 'bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700'
+                  ? 'bg-sky-600 text-white shadow-md dark:bg-cyan-500 dark:text-slate-950'
+                  : 'bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:text-white'
               }`}
             >
               {tab.label}
@@ -640,19 +642,19 @@ export const ChapterDashboard: React.FC<ChapterDashboardProps> = ({
 
       {/* Exercise Modules Grid */}
       <div className="mb-12">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-5 px-1">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-ping" />
-            <h3 className="text-lg font-bold text-white font-mono">
+            <span className="h-2.5 w-2.5 rounded-full bg-sky-500 animate-pulse dark:bg-cyan-400" />
+            <h3 className="text-lg font-bold text-slate-900 font-mono dark:text-white">
               // {chapMeta[selectedChap].title} 特訓模組清單
             </h3>
           </div>
-          <span className="text-xs font-mono text-slate-400">
+          <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
             顯示 {currentModules.length} 項訓練專案
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-6 interactive-grid">
           {currentModules.map((m) => {
             const exerciseKey = `${selectedChap}_${m.category}`;
             const bestScore = stats.completedExercises[exerciseKey];
@@ -661,26 +663,26 @@ export const ChapterDashboard: React.FC<ChapterDashboardProps> = ({
             return (
               <div
                 key={m.category}
-                className={`relative group rounded-2xl border border-slate-800 bg-slate-900/80 p-5 backdrop-blur-md transition-all duration-300 hover:scale-[1.01] ${m.borderColor} hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] flex flex-col justify-between`}
+                className="relative group rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-[0_2px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_25px_rgba(14,165,233,0.12)] transition-all duration-300 hover:scale-[1.01] flex flex-col justify-between dark:border-slate-800 dark:bg-slate-900/80 dark:shadow-none"
               >
                 <div>
                   <div className="flex items-center justify-between gap-3 mb-3">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-950 border border-slate-700 text-xl shadow-inner">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-50 border border-sky-100 text-2xl shadow-sm dark:bg-slate-950 dark:border-slate-700">
                         {m.icon}
                       </div>
                       <div>
                         <div className="flex items-center gap-1.5">
-                          <span className="text-[10px] font-mono text-cyan-400 block tracking-wider">
+                          <span className="text-[10px] font-mono font-bold text-sky-600 block tracking-wider dark:text-cyan-400">
                             {m.category.split('_')[0]}
                           </span>
                           {m.badge && (
-                            <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-950 text-amber-300 border border-amber-500/40">
+                            <span className="text-[9px] font-mono px-1.5 py-0.2 rounded font-semibold bg-amber-100 text-amber-800 border border-amber-300 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-500/40">
                               {m.badge}
                             </span>
                           )}
                         </div>
-                        <h4 className="font-bold text-sm sm:text-base text-white group-hover:text-cyan-300 transition-colors">
+                        <h4 className="font-bold text-sm sm:text-base text-slate-900 group-hover:text-sky-600 transition-colors dark:text-white dark:group-hover:text-cyan-300">
                           {m.title}
                         </h4>
                       </div>
@@ -688,28 +690,28 @@ export const ChapterDashboard: React.FC<ChapterDashboardProps> = ({
 
                     {isDone ? (
                       <div className="text-right font-mono flex-shrink-0">
-                        <span className="text-[10px] text-emerald-400 flex items-center gap-1 justify-end">
+                        <span className="text-[10px] text-emerald-600 font-bold flex items-center gap-1 justify-end dark:text-emerald-400">
                           <CheckCircle className="h-3 w-3 inline" /> 最高
                         </span>
-                        <span className="text-xs font-bold text-emerald-300">
+                        <span className="text-sm font-bold text-emerald-600 dark:text-emerald-300">
                           {bestScore}%
                         </span>
                       </div>
                     ) : (
-                      <span className="text-[10px] font-mono text-slate-500 bg-slate-950 px-2 py-0.5 rounded border border-slate-800 flex-shrink-0">
-                        PENDING
+                      <span className="text-[10px] font-mono font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded border border-slate-200 flex-shrink-0 dark:bg-slate-950 dark:text-slate-400 dark:border-slate-800">
+                        未完成
                       </span>
                     )}
                   </div>
 
-                  <p className="text-xs text-slate-300 leading-relaxed mb-4 min-h-[38px]">
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4 min-h-[40px] dark:text-slate-300">
                     {m.subtitle}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
-                  <div className="text-xs font-mono text-slate-400">
-                    <span className="px-2 py-0.5 rounded bg-slate-950 text-cyan-300 border border-slate-800 text-[11px]">
+                <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <div className="text-xs font-mono text-slate-500">
+                    <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-medium border border-slate-200 text-xs dark:bg-slate-950 dark:text-cyan-300 dark:border-slate-800">
                       {m.count} {m.unit}
                     </span>
                   </div>
@@ -719,10 +721,10 @@ export const ChapterDashboard: React.FC<ChapterDashboardProps> = ({
                       sound.playLaser();
                       onStartExercise(selectedChap, m.category);
                     }}
-                    className={`px-4 py-2 rounded-xl font-bold font-mono text-xs flex items-center gap-1.5 transition-all cursor-pointer bg-gradient-to-r ${m.color} text-slate-950 hover:brightness-110 shadow-lg`}
+                    className="px-4 py-2.5 rounded-xl font-bold font-mono text-xs sm:text-sm flex items-center gap-1.5 transition-all cursor-pointer bg-sky-600 hover:bg-sky-500 text-white shadow-md hover:shadow-lg active:scale-[0.98] dark:bg-cyan-500 dark:text-slate-950 dark:hover:bg-cyan-400"
                   >
                     <span>{isDone ? '再次訓練' : '啟動特訓'}</span>
-                    <ChevronRight className="h-3.5 w-3.5" />
+                    <ChevronRight className="h-4 w-4" />
                   </button>
                 </div>
               </div>

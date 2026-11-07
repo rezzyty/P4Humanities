@@ -33,19 +33,19 @@ export const WrongQuestionsModal: React.FC<WrongQuestionsModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-      <div className="relative w-full max-w-3xl max-h-[85vh] flex flex-col rounded-2xl border border-amber-500/50 bg-slate-900/95 shadow-[0_0_50px_rgba(245,158,11,0.2)] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm">
+      <div className="relative w-full max-w-3xl max-h-[85vh] flex flex-col rounded-2xl border border-slate-200 dark:border-amber-500/50 bg-white dark:bg-slate-900/95 shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-amber-500/30 px-6 py-4 bg-slate-950/70">
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-amber-500/30 px-6 py-4 bg-slate-50/90 dark:bg-slate-950/70">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-amber-950 border border-amber-500/50 text-amber-400">
+            <div className="p-2.5 rounded-xl bg-amber-100 dark:bg-amber-950 border border-amber-300 dark:border-amber-500/50 text-amber-700 dark:text-amber-400">
               <AlertTriangle className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-mono text-amber-400">// MISSION ERROR TERMINAL</div>
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+              <div className="text-xs font-mono font-semibold text-amber-600 dark:text-amber-400">// MISSION ERROR TERMINAL</div>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <span>錯題回顧終端機</span>
-                <span className="text-xs bg-amber-950 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded-full font-mono">
+                <span className="text-xs bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-500/40 px-2.5 py-0.5 rounded-full font-mono font-bold">
                   {wrongQuestions.length} 題需複習
                 </span>
               </h2>
@@ -57,7 +57,7 @@ export const WrongQuestionsModal: React.FC<WrongQuestionsModalProps> = ({
               sound.playClick();
               onClose();
             }}
-            className="p-1.5 rounded-lg border border-slate-700 bg-slate-800 text-slate-400 hover:text-white hover:border-rose-500 transition-colors cursor-pointer"
+            className="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-400 transition-colors cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center shadow-xs"
           >
             <X className="h-5 w-5" />
           </button>
@@ -67,9 +67,9 @@ export const WrongQuestionsModal: React.FC<WrongQuestionsModalProps> = ({
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {wrongQuestions.length === 0 ? (
             <div className="text-center py-12">
-              <CheckCircle className="h-16 w-16 text-emerald-400 mx-auto mb-3 opacity-80" />
-              <h3 className="text-lg font-bold text-white mb-1">太厲害了！目前沒有未解決的錯題</h3>
-              <p className="text-xs text-slate-400 max-w-sm mx-auto">
+              <CheckCircle className="h-16 w-16 text-emerald-500 mx-auto mb-3" />
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">太厲害了！目前沒有未解決的錯題</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
                 您的常識作戰系統數據完全精準！繼續保持全勝紀錄吧，指揮官！
               </p>
             </div>
@@ -77,15 +77,15 @@ export const WrongQuestionsModal: React.FC<WrongQuestionsModalProps> = ({
             wrongQuestions.map((item, idx) => (
               <div
                 key={`${item.id}_${idx}`}
-                className="p-4 rounded-xl border border-slate-800 bg-slate-950/60 hover:border-amber-500/40 transition-colors"
+                className="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/60 hover:border-amber-400 transition-colors shadow-xs"
               >
-                <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center justify-between mb-2.5">
                   <div className="flex items-center gap-2 text-xs font-mono">
-                    <span className="text-amber-400 font-bold">#{idx + 1}</span>
-                    <span className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300 text-[10px]">
+                    <span className="text-amber-700 dark:text-amber-400 font-bold text-sm">#{idx + 1}</span>
+                    <span className="px-2.5 py-1 rounded-lg bg-slate-200/80 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold">
                       第{item.chapter}課
                     </span>
-                    <span className="text-slate-400 text-[11px]">{item.id}</span>
+                    <span className="text-slate-500 dark:text-slate-400 text-xs">{item.id}</span>
                   </div>
 
                   <button
@@ -94,31 +94,31 @@ export const WrongQuestionsModal: React.FC<WrongQuestionsModalProps> = ({
                       onRemoveItem(item.id);
                     }}
                     title="標記已掌握並從錯題庫移除"
-                    className="flex items-center gap-1 text-[11px] text-slate-400 hover:text-emerald-400 px-2 py-1 rounded hover:bg-slate-800 transition-colors cursor-pointer"
+                    className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800 transition-colors cursor-pointer min-h-[36px]"
                   >
-                    <CheckCircle className="h-3.5 w-3.5" />
+                    <CheckCircle className="h-4 w-4" />
                     <span>已弄懂消除</span>
                   </button>
                 </div>
 
-                <div className="text-sm font-semibold text-white mb-3 leading-relaxed">
+                <div className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-3 leading-relaxed">
                   {item.prompt}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono mb-2">
-                  <div className="p-2.5 rounded bg-rose-950/40 border border-rose-500/30 text-rose-300">
-                    <span className="text-rose-400 font-bold block mb-0.5">// 你的回答：</span>
-                    <span>{item.userAnswer}</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm font-mono mb-2.5">
+                  <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-500/30 text-rose-800 dark:text-rose-300">
+                    <span className="text-rose-600 dark:text-rose-400 font-bold block mb-1">// 你的回答：</span>
+                    <span className="font-sans font-semibold">{item.userAnswer}</span>
                   </div>
-                  <div className="p-2.5 rounded bg-emerald-950/40 border border-emerald-500/30 text-emerald-300">
-                    <span className="text-emerald-400 font-bold block mb-0.5">// 正確解答：</span>
-                    <span>{item.correctAnswer}</span>
+                  <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300">
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold block mb-1">// 正確解答：</span>
+                    <span className="font-sans font-semibold">{item.correctAnswer}</span>
                   </div>
                 </div>
 
                 {item.explanation && (
-                  <div className="text-xs text-slate-400 bg-slate-900/60 p-2.5 rounded border border-slate-800/80">
-                    💡 <strong>解析提示：</strong> {item.explanation}
+                  <div className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 bg-amber-50/70 dark:bg-slate-900/60 p-3 rounded-xl border border-amber-200 dark:border-slate-800/80 leading-relaxed">
+                    💡 <strong className="text-amber-800 dark:text-amber-300">解析提示：</strong> {item.explanation}
                   </div>
                 )}
               </div>
@@ -127,24 +127,24 @@ export const WrongQuestionsModal: React.FC<WrongQuestionsModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="border-t border-amber-500/30 px-6 py-3 bg-slate-950/80 flex items-center justify-between">
+        <div className="border-t border-slate-200 dark:border-amber-500/30 px-6 py-4 bg-slate-50/90 dark:bg-slate-950/80 flex items-center justify-between">
           {wrongQuestions.length > 0 ? (
             confirmClear ? (
               <div className="flex items-center gap-2">
-                <span className="text-xs text-rose-400">確定清空所有錯題？</span>
+                <span className="text-xs text-rose-600 font-bold">確定清空所有錯題？</span>
                 <button
                   onClick={() => {
                     sound.playClick();
                     onClearAll();
                     setConfirmClear(false);
                   }}
-                  className="px-2 py-1 rounded bg-rose-600 hover:bg-rose-500 text-white text-xs font-mono"
+                  className="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-mono font-bold cursor-pointer"
                 >
                   確認
                 </button>
                 <button
                   onClick={() => setConfirmClear(false)}
-                  className="px-2 py-1 rounded bg-slate-800 text-slate-300 text-xs"
+                  className="px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-slate-700 text-xs font-bold cursor-pointer"
                 >
                   取消
                 </button>
@@ -155,7 +155,7 @@ export const WrongQuestionsModal: React.FC<WrongQuestionsModalProps> = ({
                   sound.playClick();
                   setConfirmClear(true);
                 }}
-                className="flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 transition-colors cursor-pointer font-mono"
+                className="flex items-center gap-1.5 text-xs text-rose-600 dark:text-rose-400 hover:text-rose-700 transition-colors cursor-pointer font-mono font-bold p-1"
               >
                 <Trash2 className="h-4 w-4" />
                 <span>清空所有紀錄</span>
@@ -170,7 +170,7 @@ export const WrongQuestionsModal: React.FC<WrongQuestionsModalProps> = ({
               sound.playClick();
               onClose();
             }}
-            className="px-5 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold font-mono text-xs transition-colors cursor-pointer"
+            className="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold font-mono text-sm transition-colors cursor-pointer min-h-[44px]"
           >
             關閉終端 (CLOSE)
           </button>

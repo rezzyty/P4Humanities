@@ -114,26 +114,30 @@ export const OrderingExercise: React.FC<OrderingExerciseProps> = ({
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
       {/* Top HUD */}
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border border-cyan-500/30 bg-slate-900/80 p-4 rounded-xl backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.1)]">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border border-amber-200 dark:border-amber-500/30 bg-white/95 dark:bg-slate-900/80 p-4 rounded-2xl backdrop-blur-md shadow-sm">
         <div className="flex items-center gap-3">
           <button
             onClick={() => {
               sound.playClick();
               onBack();
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:border-cyan-500 text-slate-300 hover:text-cyan-400 text-xs font-mono transition-colors"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:border-amber-400 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 text-xs font-mono transition-colors cursor-pointer min-h-[40px]"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>返回目錄</span>
           </button>
 
           <div>
-            <div className="text-[11px] font-mono text-cyan-400">
-              {chapter === 4 ? '// 第4課 發現地球' : '// 第5課 地球生病了'}
+            <div className="text-[11px] font-mono font-semibold text-amber-600 dark:text-amber-400">
+              {chapter === 1 && '// 第1課 小小考察隊'}
+              {chapter === 2 && '// 第2課 漫遊香港'}
+              {chapter === 3 && '// 第3課 香港的氣候'}
+              {chapter === 4 && '// 第4課 發現地球'}
+              {chapter === 5 && '// 第5課 地球生病了'}
             </div>
-            <div className="text-sm font-bold text-white flex items-center gap-2">
-              <span>H4a_u2_09 排序題 (知識與理解)</span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 border border-cyan-500/50 text-cyan-300">
+            <div className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span>H4a 排序題 (知識與理解)</span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-100 dark:bg-cyan-950 border border-amber-300 dark:border-cyan-500/50 text-amber-800 dark:text-cyan-300 font-bold">
                 {currentQ.id}
               </span>
             </div>
@@ -141,22 +145,22 @@ export const OrderingExercise: React.FC<OrderingExerciseProps> = ({
         </div>
 
         {/* HUD Counters */}
-        <div className="flex items-center gap-4 font-mono text-xs">
-          <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
-            <span className="text-slate-400">進度:</span>
-            <span className="text-cyan-400 font-bold">
+        <div className="flex items-center gap-3 sm:gap-4 font-mono text-xs">
+          <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800/80 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700">
+            <span className="text-slate-500 dark:text-slate-400">進度:</span>
+            <span className="text-amber-600 dark:text-cyan-400 font-bold text-sm">
               {currentIndex + 1} / {questions.length}
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
-            <span className="text-slate-400">得分:</span>
-            <span className="text-emerald-400 font-bold">{score}</span>
+          <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800/80 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700">
+            <span className="text-slate-500 dark:text-slate-400">得分:</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-bold text-sm">{score}</span>
           </div>
 
           {combo > 1 && (
-            <div className="flex items-center gap-1 bg-amber-950/60 border border-amber-500/60 px-2.5 py-1.5 rounded-lg text-amber-300 font-bold animate-pulse">
-              <Zap className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+            <div className="flex items-center gap-1 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-500/60 px-3 py-2 rounded-xl text-amber-800 dark:text-amber-300 font-bold animate-pulse">
+              <Zap className="h-4 w-4 fill-amber-500 text-amber-500" />
               <span>COMBO x{combo}</span>
             </div>
           )}
@@ -164,61 +168,56 @@ export const OrderingExercise: React.FC<OrderingExerciseProps> = ({
       </div>
 
       {/* Progress Bar */}
-      <div className="w-full bg-slate-900 h-2 rounded-full overflow-hidden mb-6 border border-slate-800">
+      <div className="w-full bg-slate-200 dark:bg-slate-900 h-2.5 rounded-full overflow-hidden mb-6 border border-slate-300 dark:border-slate-800 shadow-inner">
         <div
-          className="h-full bg-gradient-to-r from-amber-500 via-sky-400 to-emerald-400 transition-all duration-300 shadow-[0_0_10px_rgba(245,158,11,0.8)]"
+          className="h-full bg-gradient-to-r from-amber-500 via-orange-400 to-emerald-500 transition-all duration-300 shadow-sm"
           style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
         />
       </div>
 
       {/* Main Ordering Card */}
-      <div className="border border-amber-500/30 bg-slate-900/90 rounded-2xl p-6 shadow-2xl relative overflow-hidden backdrop-blur-xl">
-        <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-amber-400"></div>
-        <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-amber-400"></div>
-        <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-amber-400"></div>
-        <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-amber-400"></div>
-
+      <div className="border border-amber-200/90 dark:border-amber-500/30 bg-white dark:bg-slate-900/90 rounded-2xl p-6 sm:p-8 shadow-sm dark:shadow-2xl relative overflow-hidden backdrop-blur-xl exercise-card">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-          <span className="text-xs font-mono text-amber-400 bg-amber-950/60 border border-amber-500/40 px-2.5 py-1 rounded-md">
+          <span className="text-xs font-mono font-bold text-amber-700 dark:text-amber-400 bg-amber-100/90 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-500/40 px-3 py-1 rounded-lg">
             SEQUENCE PROTOCOL #{currentIndex + 1}
           </span>
-          <span className="text-xs px-2.5 py-1 rounded-md font-medium border bg-amber-950/70 border-amber-500 text-amber-300">
+          <span className="text-xs px-3 py-1 rounded-lg font-bold border bg-amber-50 dark:bg-amber-950/70 border-amber-300 dark:border-amber-500 text-amber-800 dark:text-amber-300">
             📊 序列順序排序題
           </span>
         </div>
 
         {/* Prompt */}
-        <h2 className="text-lg sm:text-xl font-bold text-white mb-2 leading-relaxed">
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3 leading-relaxed question-prompt">
           {currentQ.prompt}
         </h2>
 
         {/* Direction hint */}
         {currentQ.directionHint && (
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-amber-950/40 border border-amber-500/40 text-amber-300 text-xs font-mono mb-6">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/40 text-amber-800 dark:text-amber-300 text-xs sm:text-sm font-medium mb-6">
             <span>規則指示：</span>
             <strong>{currentQ.directionHint}</strong>
           </div>
         )}
 
         {/* Current Sequencer Visualizer */}
-        <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 mb-6 flex flex-wrap items-center justify-between gap-3">
-          <div className="text-xs font-mono text-slate-400">當前排列表達式：</div>
+        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 mb-6 flex flex-wrap items-center justify-between gap-3">
+          <div className="text-xs font-mono font-semibold text-slate-600 dark:text-slate-400">當前排列表達式：</div>
           <div className="flex items-center flex-wrap gap-2 font-mono font-bold text-sm">
             {currentOrder.map((id, idx) => (
               <React.Fragment key={id}>
                 <span
-                  className={`px-2.5 py-1 rounded-lg border ${
+                  className={`px-3 py-1.5 rounded-xl border text-sm transition-all ${
                     isAnswered
                       ? id === currentQ.correctOrder[idx]
-                        ? 'border-emerald-500 bg-emerald-950 text-emerald-300'
-                        : 'border-rose-500 bg-rose-950 text-rose-300'
-                      : 'border-cyan-400 bg-cyan-950 text-cyan-200'
+                        ? 'border-emerald-500 bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300'
+                        : 'border-rose-500 bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300'
+                      : 'border-amber-300 dark:border-cyan-400 bg-amber-50 dark:bg-cyan-950 text-amber-900 dark:text-cyan-200'
                   }`}
                 >
                   第 {idx + 1} 位: {id}
                 </span>
                 {idx < currentOrder.length - 1 && (
-                  <span className="text-slate-600 font-bold">➔</span>
+                  <span className="text-slate-400 dark:text-slate-600 font-bold">➔</span>
                 )}
               </React.Fragment>
             ))}
@@ -226,7 +225,7 @@ export const OrderingExercise: React.FC<OrderingExerciseProps> = ({
         </div>
 
         {/* Interactive Sortable List */}
-        <div className="space-y-3 mb-8">
+        <div className="space-y-3.5 mb-8">
           {currentOrder.map((id, index) => {
             const item = currentQ.items.find((it) => it.id === id);
             if (!item) return null;
@@ -238,60 +237,62 @@ export const OrderingExercise: React.FC<OrderingExerciseProps> = ({
                 key={item.id}
                 layout
                 transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                className={`p-4 rounded-xl border flex items-center justify-between gap-4 transition-all ${
+                className={`p-4 sm:p-5 rounded-2xl border flex items-center justify-between gap-4 transition-all option-btn ${
                   isAnswered
                     ? isPositionCorrect
-                      ? 'border-emerald-500 bg-emerald-950/30'
-                      : 'border-rose-500 bg-rose-950/30'
-                    : 'border-slate-800 bg-slate-800/40 hover:border-amber-500/50'
+                      ? 'border-emerald-400 bg-emerald-50/80 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-100'
+                      : 'border-rose-400 bg-rose-50/80 dark:bg-rose-950/30 text-rose-900 dark:text-rose-100'
+                    : 'border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 hover:border-amber-400 dark:hover:border-amber-500/50 hover:bg-amber-50/30 dark:hover:bg-slate-800/80 shadow-xs'
                 }`}
               >
-                <div className="flex items-center gap-3.5">
+                <div className="flex items-center gap-3.5 sm:gap-4 flex-1">
                   <span
-                    className={`h-8 w-8 rounded-lg flex items-center justify-center font-mono font-bold text-sm border ${
+                    className={`h-10 w-10 sm:h-11 sm:w-11 rounded-xl flex items-center justify-center font-mono font-bold text-sm sm:text-base border flex-shrink-0 ${
                       isAnswered
                         ? isPositionCorrect
-                          ? 'bg-emerald-500 border-emerald-400 text-slate-950'
+                          ? 'bg-emerald-500 border-emerald-400 text-white'
                           : 'bg-rose-500 border-rose-400 text-white'
-                        : 'bg-amber-500/20 border-amber-400 text-amber-300'
+                        : 'bg-amber-100 dark:bg-amber-500/20 border-amber-300 dark:border-amber-400 text-amber-800 dark:text-amber-300'
                     }`}
                   >
                     #{index + 1}
                   </span>
 
-                  <div>
-                    <span className="text-xs font-mono text-cyan-400 mr-2">【{item.id}】</span>
-                    <span className="text-base font-medium text-white">{item.text}</span>
+                  <div className="flex-1">
+                    <span className="text-xs sm:text-sm font-mono font-bold text-amber-700 dark:text-cyan-400 mr-2">【{item.id}】</span>
+                    <span className="text-base sm:text-lg font-medium text-slate-900 dark:text-white leading-relaxed">{item.text}</span>
                   </div>
                 </div>
 
-                {/* Move controls */}
+                {/* Move controls - optimized with 48px hitboxes for iPad touch */}
                 {!isAnswered ? (
-                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                  <div className="flex items-center gap-2 flex-shrink-0">
                     <button
                       disabled={index === 0}
                       onClick={() => moveItem(index, 'up')}
-                      className="p-2 rounded-lg border border-slate-700 bg-slate-800 hover:border-cyan-400 hover:text-cyan-300 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                      className="p-3 sm:p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-300 text-slate-700 dark:text-slate-300 disabled:opacity-25 disabled:cursor-not-allowed transition-all cursor-pointer min-h-[48px] min-w-[48px] flex items-center justify-center shadow-xs active:scale-95"
                       title="往上移一位"
+                      aria-label="往上移一位"
                     >
-                      <ArrowUp className="h-4 w-4" />
+                      <ArrowUp className="h-5 w-5" />
                     </button>
                     <button
                       disabled={index === currentOrder.length - 1}
                       onClick={() => moveItem(index, 'down')}
-                      className="p-2 rounded-lg border border-slate-700 bg-slate-800 hover:border-cyan-400 hover:text-cyan-300 text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                      className="p-3 sm:p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-300 text-slate-700 dark:text-slate-300 disabled:opacity-25 disabled:cursor-not-allowed transition-all cursor-pointer min-h-[48px] min-w-[48px] flex items-center justify-center shadow-xs active:scale-95"
                       title="往下移一位"
+                      aria-label="往下移一位"
                     >
-                      <ArrowDown className="h-4 w-4" />
+                      <ArrowDown className="h-5 w-5" />
                     </button>
                   </div>
                 ) : (
                   <div className="flex-shrink-0">
                     {isPositionCorrect ? (
-                      <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                      <CheckCircle2 className="h-6 w-6 text-emerald-500" />
                     ) : (
-                      <div className="text-xs text-rose-400 font-mono flex items-center gap-1">
-                        <XCircle className="h-4 w-4 inline" />
+                      <div className="text-xs sm:text-sm text-rose-600 dark:text-rose-400 font-mono font-bold flex items-center gap-1">
+                        <XCircle className="h-5 w-5 inline" />
                         <span>正解：{currentQ.correctOrder[index]}</span>
                       </div>
                     )}
@@ -303,20 +304,20 @@ export const OrderingExercise: React.FC<OrderingExerciseProps> = ({
         </div>
 
         {/* Footer Actions */}
-        <div className="border-t border-slate-800 pt-5 flex flex-wrap items-center justify-between gap-4">
+        <div className="border-t border-slate-200 dark:border-slate-800 pt-6 flex flex-wrap items-center justify-between gap-4">
           {!isAnswered ? (
-            <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
               <button
                 onClick={handleCheck}
-                className="px-6 py-3 rounded-xl font-bold font-mono text-sm bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 hover:brightness-110 shadow-[0_0_20px_rgba(245,158,11,0.4)] flex items-center justify-center gap-2 cursor-pointer transition-all"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-xl font-bold font-mono text-base bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 hover:brightness-105 shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all min-h-[50px] active:scale-[0.98]"
               >
-                <Zap className="h-4 w-4" />
-                <span>確認順序序列 (CONFIRM SEQUENCE)</span>
+                <Zap className="h-5 w-5 fill-slate-950" />
+                <span>確認順序序列 (CONFIRM)</span>
               </button>
 
               <button
                 onClick={handleResetOrder}
-                className="px-4 py-3 rounded-xl border border-slate-700 bg-slate-800 hover:border-slate-600 text-slate-300 text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="w-full sm:w-auto px-5 py-3.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:border-slate-400 text-slate-700 dark:text-slate-300 text-sm font-mono font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer min-h-[50px]"
               >
                 <RotateCcw className="h-4 w-4" />
                 <span>重設排序</span>
@@ -326,13 +327,13 @@ export const OrderingExercise: React.FC<OrderingExerciseProps> = ({
             <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 {isCorrect ? (
-                  <div className="flex items-center gap-2 text-emerald-400 font-bold">
+                  <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-base">
                     <CheckCircle2 className="h-6 w-6" />
                     <span>排序完全正確！獲得 +150 EXP</span>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-2 text-rose-400 font-bold text-sm">
-                    <XCircle className="h-6 w-6" />
+                  <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-bold text-sm sm:text-base">
+                    <XCircle className="h-6 w-6 flex-shrink-0" />
                     <span>
                       排序有誤！正確序列為：
                       {currentQ.correctOrder.join(' ➔ ')}
@@ -341,11 +342,11 @@ export const OrderingExercise: React.FC<OrderingExerciseProps> = ({
                 )}
               </div>
 
-              <div className="flex items-center gap-2 w-full sm:w-auto">
+              <div className="flex items-center gap-2.5 w-full sm:w-auto">
                 {currentQ.explanation && (
                   <button
                     onClick={() => setShowExplanation(!showExplanation)}
-                    className="flex items-center gap-1 px-3 py-2 rounded-lg border border-amber-500/40 bg-amber-950/30 text-amber-300 text-xs font-mono hover:bg-amber-900/40 transition-colors"
+                    className="flex items-center gap-1.5 px-4 py-3 rounded-xl border border-amber-300 dark:border-amber-500/40 bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-300 text-xs sm:text-sm font-semibold hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors min-h-[48px] cursor-pointer"
                   >
                     <HelpCircle className="h-4 w-4" />
                     <span>{showExplanation ? '收起解析' : '作戰解析'}</span>
@@ -354,10 +355,10 @@ export const OrderingExercise: React.FC<OrderingExerciseProps> = ({
 
                 <button
                   onClick={handleNext}
-                  className="flex-1 sm:flex-none px-6 py-2.5 rounded-xl font-bold font-mono text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 hover:brightness-110 shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center justify-center gap-2 cursor-pointer"
+                  className="flex-1 sm:flex-none px-7 py-3 rounded-xl font-bold font-mono text-base bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 hover:brightness-105 shadow-md flex items-center justify-center gap-2 cursor-pointer min-h-[48px] active:scale-[0.98]"
                 >
                   <span>{currentIndex + 1 < questions.length ? '下一排序題' : '結算任務'}</span>
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className="h-5 w-5" />
                 </button>
               </div>
             </div>
@@ -371,16 +372,16 @@ export const OrderingExercise: React.FC<OrderingExerciseProps> = ({
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="mt-4 p-4 rounded-xl border border-amber-500/30 bg-amber-950/20 text-slate-200 text-xs sm:text-sm leading-relaxed"
+              className="mt-5 p-5 rounded-xl border border-amber-200 dark:border-amber-500/30 bg-amber-50/90 dark:bg-amber-950/20 text-slate-800 dark:text-slate-200 text-sm leading-relaxed"
             >
-              <div className="font-bold text-amber-400 mb-1 flex items-center gap-1.5 font-mono">
-                <HelpCircle className="h-4 w-4" />
+              <div className="font-bold text-amber-800 dark:text-amber-400 mb-1.5 flex items-center gap-1.5 font-mono">
+                <HelpCircle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
                 <span>標準順序解析：</span>
               </div>
-              <p className="mb-2 font-mono text-cyan-300 font-bold">
+              <p className="mb-2 font-mono text-cyan-800 dark:text-cyan-300 font-bold">
                 正確順序：{currentQ.correctOrder.join(' ➔ ')}
               </p>
-              <p className="text-slate-300">{currentQ.explanation}</p>
+              <p className="text-slate-700 dark:text-slate-300 leading-relaxed">{currentQ.explanation}</p>
             </motion.div>
           )}
         </AnimatePresence>

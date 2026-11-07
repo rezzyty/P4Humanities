@@ -143,26 +143,30 @@ export const WordBankExercise: React.FC<WordBankExerciseProps> = ({
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
       {/* Top HUD */}
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border border-cyan-500/30 bg-slate-900/80 p-4 rounded-xl backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.1)]">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border border-purple-200 dark:border-cyan-500/30 bg-white/95 dark:bg-slate-900/80 p-4 rounded-2xl backdrop-blur-md shadow-sm">
         <div className="flex items-center gap-3">
           <button
             onClick={() => {
               sound.playClick();
               onBack();
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:border-cyan-500 text-slate-300 hover:text-cyan-400 text-xs font-mono transition-colors"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:border-purple-400 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-cyan-400 text-xs font-mono transition-colors cursor-pointer min-h-[40px]"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>返回目錄</span>
           </button>
 
           <div>
-            <div className="text-[11px] font-mono text-cyan-400">
-              {chapter === 4 ? '// 第4課 發現地球' : '// 第5課 地球生病了'}
+            <div className="text-[11px] font-mono font-semibold text-purple-600 dark:text-cyan-400">
+              {chapter === 1 && '// 第1課 小小考察隊'}
+              {chapter === 2 && '// 第2課 漫遊香港'}
+              {chapter === 3 && '// 第3課 香港的氣候'}
+              {chapter === 4 && '// 第4課 發現地球'}
+              {chapter === 5 && '// 第5課 地球生病了'}
             </div>
-            <div className="text-sm font-bold text-white flex items-center gap-2">
-              <span>H4a_u2_03 供詞填充題 (知識與理解)</span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 border border-cyan-500/50 text-cyan-300">
+            <div className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span>H4a 供詞填充題 (知識與理解)</span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-100 dark:bg-cyan-950 border border-purple-300 dark:border-cyan-500/50 text-purple-800 dark:text-cyan-300 font-bold">
                 {currentSet.id}
               </span>
             </div>
@@ -170,56 +174,51 @@ export const WordBankExercise: React.FC<WordBankExerciseProps> = ({
         </div>
 
         {/* HUD Counters */}
-        <div className="flex items-center gap-4 font-mono text-xs">
-          <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
-            <span className="text-slate-400">大題組:</span>
-            <span className="text-cyan-400 font-bold">
+        <div className="flex items-center gap-3 sm:gap-4 font-mono text-xs">
+          <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800/80 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700">
+            <span className="text-slate-500 dark:text-slate-400">大題組:</span>
+            <span className="text-purple-600 dark:text-cyan-400 font-bold text-sm">
               {currentIndex + 1} / {questions.length}
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
-            <span className="text-slate-400">累計得分:</span>
-            <span className="text-emerald-400 font-bold">{totalSubScore}</span>
+          <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800/80 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700">
+            <span className="text-slate-500 dark:text-slate-400">累計得分:</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-bold text-sm">{totalSubScore}</span>
           </div>
         </div>
       </div>
 
       {/* Progress Bar */}
-      <div className="w-full bg-slate-900 h-2 rounded-full overflow-hidden mb-6 border border-slate-800">
+      <div className="w-full bg-slate-200 dark:bg-slate-900 h-2.5 rounded-full overflow-hidden mb-6 border border-slate-300 dark:border-slate-800 shadow-inner">
         <div
-          className="h-full bg-gradient-to-r from-cyan-500 via-sky-400 to-emerald-400 transition-all duration-300 shadow-[0_0_10px_rgba(6,182,212,0.8)]"
+          className="h-full bg-gradient-to-r from-purple-500 via-indigo-500 to-emerald-500 transition-all duration-300 shadow-sm"
           style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
         />
       </div>
 
       {/* Main Container */}
-      <div className="border border-cyan-500/30 bg-slate-900/90 rounded-2xl p-6 shadow-2xl relative overflow-hidden backdrop-blur-xl">
-        <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400"></div>
-        <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400"></div>
-        <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-400"></div>
-        <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-400"></div>
-
+      <div className="border border-purple-200/90 dark:border-cyan-500/30 bg-white dark:bg-slate-900/90 rounded-2xl p-6 sm:p-8 shadow-sm dark:shadow-2xl relative overflow-hidden backdrop-blur-xl exercise-card">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-          <span className="text-xs font-mono text-cyan-400 bg-cyan-950/60 border border-cyan-500/40 px-2.5 py-1 rounded-md">
+          <span className="text-xs font-mono font-bold text-purple-700 dark:text-cyan-400 bg-purple-100/90 dark:bg-cyan-950/60 border border-purple-300 dark:border-cyan-500/40 px-3 py-1 rounded-lg">
             MISSION SET #{currentIndex + 1}
           </span>
-          <span className="text-xs px-2.5 py-1 rounded-md font-medium border bg-purple-950/70 border-purple-500 text-purple-300">
+          <span className="text-xs px-3 py-1 rounded-lg font-bold border bg-purple-50 dark:bg-purple-950/70 border-purple-300 dark:border-purple-500 text-purple-800 dark:text-purple-300">
             🧩 供詞庫填充（請選取下方詞語填入空格）
           </span>
         </div>
 
         {/* Word Bank Floating Panel */}
-        <div className="mb-6 p-4 rounded-xl border border-cyan-500/40 bg-slate-950/80 shadow-[0_0_15px_rgba(6,182,212,0.15)]">
-          <div className="flex items-center justify-between mb-2.5">
-            <span className="text-xs font-mono text-cyan-300 flex items-center gap-1.5 font-bold">
-              <Zap className="h-4 w-4 text-cyan-400" />
+        <div className="mb-6 p-5 rounded-2xl border border-purple-200 dark:border-cyan-500/40 bg-purple-50/70 dark:bg-slate-950/80 shadow-xs">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xs sm:text-sm font-mono text-purple-800 dark:text-cyan-300 flex items-center gap-1.5 font-bold">
+              <Zap className="h-4 w-4 text-purple-600 dark:text-cyan-400" />
               <span>【 可供選用之詞庫 】</span>
             </span>
             {!isAnswered && (
               <button
                 onClick={handleResetCurrentSet}
-                className="text-xs text-slate-400 hover:text-cyan-400 flex items-center gap-1 transition-colors"
+                className="text-xs text-slate-500 dark:text-slate-400 hover:text-purple-600 dark:hover:text-cyan-400 flex items-center gap-1 transition-colors cursor-pointer p-1"
               >
                 <RefreshCw className="h-3.5 w-3.5" />
                 <span>重設所有空格</span>
@@ -227,7 +226,7 @@ export const WordBankExercise: React.FC<WordBankExerciseProps> = ({
             )}
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5">
             {currentSet.wordBank.map((word, wIdx) => {
               const isUsed = usedWords.includes(word);
 
@@ -236,10 +235,10 @@ export const WordBankExercise: React.FC<WordBankExerciseProps> = ({
                   key={wIdx}
                   disabled={isAnswered}
                   onClick={() => handlePickWord(word)}
-                  className={`px-3 py-2.5 rounded-lg border font-medium text-sm transition-all duration-200 cursor-pointer disabled:cursor-default flex items-center justify-center gap-1 ${
+                  className={`px-3.5 py-3 rounded-xl border font-bold text-base transition-all duration-150 cursor-pointer disabled:cursor-default flex items-center justify-center gap-1 min-h-[48px] touch-target shadow-xs active:scale-95 ${
                     isUsed
-                      ? 'border-slate-800 bg-slate-900/60 text-slate-500 opacity-60 line-through'
-                      : 'border-cyan-400/60 bg-cyan-950/50 hover:bg-cyan-900/70 text-cyan-100 hover:border-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)] hover:scale-[1.02]'
+                      ? 'border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/60 text-slate-400 dark:text-slate-500 opacity-60 line-through'
+                      : 'border-purple-300 dark:border-cyan-400/60 bg-white dark:bg-cyan-950/50 hover:bg-purple-100 dark:hover:bg-cyan-900/70 text-purple-900 dark:text-cyan-100 hover:border-purple-400 shadow-sm'
                   }`}
                 >
                   <span>{word}</span>
@@ -247,13 +246,13 @@ export const WordBankExercise: React.FC<WordBankExerciseProps> = ({
               );
             })}
           </div>
-          <p className="text-[11px] text-slate-400 mt-2 font-mono">
-            💡 提示：點擊句子中的【空格】以鎖定位置，再點選上方詞語填入！
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-3 font-mono">
+            💡 提示：點擊下方句子中的【空格】以鎖定位置，再點選上方詞語填入！
           </p>
         </div>
 
         {/* 5 Sub-Questions Sentences */}
-        <div className="space-y-3.5 mb-6">
+        <div className="space-y-4 mb-6">
           {currentSet.subQuestions.map((sq) => {
             const userChoice = answers[sq.subId];
             const isActive = activeSubId === sq.subId;
@@ -268,14 +267,14 @@ export const WordBankExercise: React.FC<WordBankExerciseProps> = ({
                     setActiveSubId(sq.subId);
                   }
                 }}
-                className={`p-4 rounded-xl border transition-all cursor-pointer ${
+                className={`p-5 rounded-2xl border transition-all cursor-pointer option-btn ${
                   isAnswered
                     ? isCorrect
-                      ? 'border-emerald-500/70 bg-emerald-950/20'
-                      : 'border-rose-500/70 bg-rose-950/20'
+                      ? 'border-emerald-400 bg-emerald-50/80 dark:bg-emerald-950/20'
+                      : 'border-rose-400 bg-rose-50/80 dark:bg-rose-950/20'
                     : isActive
-                    ? 'border-cyan-400 bg-cyan-950/40 ring-1 ring-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
-                    : 'border-slate-800 bg-slate-800/40 hover:border-slate-700'
+                    ? 'border-purple-500 bg-purple-50/90 dark:bg-cyan-950/40 ring-2 ring-purple-300 dark:ring-cyan-400 shadow-xs'
+                    : 'border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 hover:border-purple-300'
                 }`}
               >
                 <div className="flex flex-wrap items-center justify-between gap-3 text-base sm:text-lg leading-relaxed">
@@ -295,27 +294,27 @@ export const WordBankExercise: React.FC<WordBankExerciseProps> = ({
                                   setActiveSubId(sq.subId);
                                 }
                               }}
-                              className={`inline-flex items-center mx-1.5 px-3 py-1 rounded-lg border font-bold text-sm sm:text-base font-sans transition-all ${
+                              className={`inline-flex items-center mx-2 px-3.5 py-1.5 rounded-xl border font-bold text-base sm:text-lg font-sans transition-all min-h-[38px] ${
                                 isAnswered
                                   ? isCorrect
-                                    ? 'border-emerald-500 bg-emerald-950 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.3)]'
-                                    : 'border-rose-500 bg-rose-950 text-rose-300 shadow-[0_0_10px_rgba(244,63,94,0.3)]'
+                                    ? 'border-emerald-500 bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300'
+                                    : 'border-rose-500 bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300'
                                   : userChoice
-                                  ? 'border-cyan-400 bg-cyan-950 text-cyan-200 hover:border-rose-400 hover:text-rose-300'
+                                  ? 'border-purple-400 bg-purple-100 dark:bg-cyan-950 text-purple-900 dark:text-cyan-200 hover:border-rose-400 hover:text-rose-600'
                                   : isActive
-                                  ? 'border-cyan-400 bg-cyan-950/70 text-cyan-400 animate-pulse'
-                                  : 'border-dashed border-slate-600 bg-slate-900 text-slate-500'
+                                  ? 'border-purple-500 bg-purple-100/90 text-purple-900 dark:bg-cyan-950/70 dark:text-cyan-400 animate-pulse'
+                                  : 'border-dashed border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-500'
                               }`}
                               title={userChoice && !isAnswered ? '點擊清除此格' : '點擊選取此格'}
                             >
                               {userChoice || '【 點選此格填入 】'}
                               {userChoice && !isAnswered && (
-                                <span className="ml-1 text-xs text-rose-400">×</span>
+                                <span className="ml-1.5 text-xs text-rose-500 font-bold">×</span>
                               )}
                             </span>
                           );
                         }
-                        return <span key={pIdx}>{part}</span>;
+                        return <span key={pIdx} className="text-slate-800 dark:text-slate-100">{part}</span>;
                       });
                     })()}
                   </div>
@@ -325,12 +324,12 @@ export const WordBankExercise: React.FC<WordBankExerciseProps> = ({
                     {isAnswered && (
                       <>
                         {isCorrect ? (
-                          <div className="flex items-center gap-1 text-emerald-400 text-sm font-bold font-mono">
+                          <div className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 text-sm font-bold font-mono">
                             <CheckCircle2 className="h-5 w-5" />
                             <span>正確</span>
                           </div>
                         ) : (
-                          <div className="flex items-center gap-1 text-rose-400 text-xs sm:text-sm font-bold">
+                          <div className="flex items-center gap-1 text-rose-600 dark:text-rose-400 text-xs sm:text-sm font-bold">
                             <XCircle className="h-5 w-5" />
                             <span>正解：{sq.correctAnswer}</span>
                           </div>
@@ -345,25 +344,25 @@ export const WordBankExercise: React.FC<WordBankExerciseProps> = ({
         </div>
 
         {/* Footer Submit / Next */}
-        <div className="border-t border-slate-800 pt-5 flex flex-wrap items-center justify-between gap-4">
+        <div className="border-t border-slate-200 dark:border-slate-800 pt-6 flex flex-wrap items-center justify-between gap-4">
           {!isAnswered ? (
             <button
               onClick={handleCheck}
               disabled={!allFilled}
-              className={`w-full sm:w-auto px-6 py-3 rounded-xl font-bold font-mono text-sm flex items-center justify-center gap-2 transition-all ${
+              className={`w-full sm:w-auto px-7 py-3.5 rounded-xl font-bold font-mono text-base flex items-center justify-center gap-2 transition-all min-h-[50px] ${
                 allFilled
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 hover:brightness-110 shadow-[0_0_20px_rgba(6,182,212,0.4)] cursor-pointer'
-                  : 'bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed'
+                  ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:brightness-105 shadow-md cursor-pointer active:scale-[0.98]'
+                  : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border border-slate-300 dark:border-slate-700 cursor-not-allowed'
               }`}
             >
-              <Zap className="h-4 w-4" />
+              <Zap className="h-5 w-5 fill-white" />
               <span>{allFilled ? '確認整組答案 (SUBMIT)' : '請填滿全部 5 個空格'}</span>
             </button>
           ) : (
             <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="text-sm font-mono text-slate-200">
+              <div className="text-sm font-mono text-slate-800 dark:text-slate-200 font-semibold">
                 本大題得分：
-                <span className="text-emerald-400 font-bold text-lg mx-1">
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold text-xl mx-1.5">
                   {Object.values(subResults).filter(Boolean).length}
                 </span>
                 / {currentSet.subQuestions.length}
@@ -371,10 +370,10 @@ export const WordBankExercise: React.FC<WordBankExerciseProps> = ({
 
               <button
                 onClick={handleNext}
-                className="w-full sm:w-auto px-6 py-2.5 rounded-xl font-bold font-mono text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 hover:brightness-110 shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-7 py-3 rounded-xl font-bold font-mono text-base bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 hover:brightness-105 shadow-md flex items-center justify-center gap-2 cursor-pointer min-h-[48px] active:scale-[0.98]"
               >
                 <span>{currentIndex + 1 < questions.length ? '下一大題組' : '結算任務'}</span>
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="h-5 w-5" />
               </button>
             </div>
           )}

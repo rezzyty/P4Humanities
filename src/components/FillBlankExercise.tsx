@@ -134,26 +134,30 @@ export const FillBlankExercise: React.FC<FillBlankExerciseProps> = ({
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
       {/* Top Bar */}
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border border-cyan-500/30 bg-slate-900/80 p-4 rounded-xl backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.1)]">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border border-sky-200 dark:border-cyan-500/30 bg-white/95 dark:bg-slate-900/80 p-4 rounded-2xl backdrop-blur-md shadow-sm">
         <div className="flex items-center gap-3">
           <button
             onClick={() => {
               sound.playClick();
               onBack();
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:border-cyan-500 text-slate-300 hover:text-cyan-400 text-xs font-mono transition-colors"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:border-sky-400 text-slate-700 dark:text-slate-300 hover:text-sky-600 dark:hover:text-cyan-400 text-xs font-mono transition-colors cursor-pointer min-h-[40px]"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>返回目錄</span>
           </button>
 
           <div>
-            <div className="text-[11px] font-mono text-cyan-400">
-              {chapter === 4 ? '// 第4課 發現地球' : '// 第5課 地球生病了'}
+            <div className="text-[11px] font-mono font-semibold text-sky-600 dark:text-cyan-400">
+              {chapter === 1 && '// 第1課 小小考察隊'}
+              {chapter === 2 && '// 第2課 漫遊香港'}
+              {chapter === 3 && '// 第3課 香港的氣候'}
+              {chapter === 4 && '// 第4課 發現地球'}
+              {chapter === 5 && '// 第5課 地球生病了'}
             </div>
-            <div className="text-sm font-bold text-white flex items-center gap-2">
-              <span>H4a_u2_02 填充題 (知識與理解)</span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 border border-cyan-500/50 text-cyan-300">
+            <div className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span>H4a 填充題 (知識與理解)</span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-100 dark:bg-cyan-950 border border-sky-300 dark:border-cyan-500/50 text-sky-800 dark:text-cyan-300 font-bold">
                 {currentQ.id}
               </span>
             </div>
@@ -161,22 +165,22 @@ export const FillBlankExercise: React.FC<FillBlankExerciseProps> = ({
         </div>
 
         {/* HUD Counters */}
-        <div className="flex items-center gap-4 font-mono text-xs">
-          <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
-            <span className="text-slate-400">進度:</span>
-            <span className="text-cyan-400 font-bold">
+        <div className="flex items-center gap-3 sm:gap-4 font-mono text-xs">
+          <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800/80 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700">
+            <span className="text-slate-500 dark:text-slate-400">進度:</span>
+            <span className="text-sky-600 dark:text-cyan-400 font-bold text-sm">
               {currentIndex + 1} / {questions.length}
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
-            <span className="text-slate-400">得分:</span>
-            <span className="text-emerald-400 font-bold">{score}</span>
+          <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800/80 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700">
+            <span className="text-slate-500 dark:text-slate-400">得分:</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-bold text-sm">{score}</span>
           </div>
 
           {combo > 1 && (
-            <div className="flex items-center gap-1 bg-amber-950/60 border border-amber-500/60 px-2.5 py-1.5 rounded-lg text-amber-300 font-bold animate-pulse">
-              <Zap className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+            <div className="flex items-center gap-1 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-500/60 px-3 py-2 rounded-xl text-amber-800 dark:text-amber-300 font-bold animate-pulse">
+              <Zap className="h-4 w-4 fill-amber-500 text-amber-500" />
               <span>COMBO x{combo}</span>
             </div>
           )}
@@ -184,31 +188,26 @@ export const FillBlankExercise: React.FC<FillBlankExerciseProps> = ({
       </div>
 
       {/* Progress Bar */}
-      <div className="w-full bg-slate-900 h-2 rounded-full overflow-hidden mb-6 border border-slate-800">
+      <div className="w-full bg-slate-200 dark:bg-slate-900 h-2.5 rounded-full overflow-hidden mb-6 border border-slate-300 dark:border-slate-800 shadow-inner">
         <div
-          className="h-full bg-gradient-to-r from-cyan-500 via-sky-400 to-emerald-400 transition-all duration-300 shadow-[0_0_10px_rgba(6,182,212,0.8)]"
+          className="h-full bg-gradient-to-r from-sky-500 via-blue-500 to-emerald-500 transition-all duration-300 shadow-sm"
           style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
         />
       </div>
 
       {/* Question Card */}
-      <div className="border border-cyan-500/30 bg-slate-900/90 rounded-2xl p-6 shadow-2xl relative overflow-hidden backdrop-blur-xl">
-        <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400"></div>
-        <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400"></div>
-        <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-400"></div>
-        <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-400"></div>
-
+      <div className="border border-sky-200/90 dark:border-cyan-500/30 bg-white dark:bg-slate-900/90 rounded-2xl p-6 sm:p-8 shadow-sm dark:shadow-2xl relative overflow-hidden backdrop-blur-xl exercise-card">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-xs font-mono text-cyan-400 bg-cyan-950/60 border border-cyan-500/40 px-2.5 py-1 rounded-md">
+          <span className="text-xs font-mono font-bold text-sky-700 dark:text-cyan-400 bg-sky-100/90 dark:bg-cyan-950/60 border border-sky-300 dark:border-cyan-500/40 px-3 py-1 rounded-lg">
             TASK #{currentIndex + 1}
           </span>
-          <span className="text-xs px-2.5 py-1 rounded-md font-medium border bg-cyan-950/70 border-cyan-500 text-cyan-300">
+          <span className="text-xs px-3 py-1 rounded-lg font-bold border bg-sky-50 dark:bg-cyan-950/70 border-sky-300 dark:border-cyan-500 text-sky-800 dark:text-cyan-300">
             ✍️ 關鍵字注入填充（共 {currentQ.blanks.length} 個空格）
           </span>
         </div>
 
         {/* Sentence Display */}
-        <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-5 mb-6 text-lg sm:text-xl font-medium text-slate-100 leading-loose">
+        <div className="bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-7 mb-6 text-xl sm:text-2xl font-medium text-slate-800 dark:text-slate-100 leading-loose question-prompt">
           {(() => {
             // Split sentence by [BLANK_X]
             const parts = currentQ.sentence.split(/(\[BLANK_\d+\])/g);
@@ -216,20 +215,19 @@ export const FillBlankExercise: React.FC<FillBlankExerciseProps> = ({
               const match = part.match(/\[BLANK_(\d+)\]/);
               if (match) {
                 const bIdx = parseInt(match[1]);
-                const blank = currentQ.blanks.find((b) => b.index === bIdx);
                 const isBlankCorrect = blankResults[bIdx];
 
                 return (
                   <span
                     key={i}
-                    className={`inline-flex items-center mx-1.5 px-3 py-1 rounded-lg border font-mono font-bold text-base transition-all ${
+                    className={`inline-flex items-center mx-1.5 px-3.5 py-1.5 rounded-xl border font-mono font-bold text-base sm:text-lg transition-all ${
                       isAnswered
                         ? isBlankCorrect
-                          ? 'border-emerald-500 bg-emerald-950/80 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.3)]'
-                          : 'border-rose-500 bg-rose-950/80 text-rose-300 shadow-[0_0_10px_rgba(244,63,94,0.3)]'
+                          ? 'border-emerald-500 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300'
+                          : 'border-rose-500 bg-rose-100 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300'
                         : userInputs[bIdx]
-                        ? 'border-cyan-400 bg-cyan-950/50 text-cyan-200'
-                        : 'border-cyan-500/50 bg-slate-900 text-cyan-400 underline decoration-dotted'
+                        ? 'border-sky-400 bg-sky-100 dark:bg-cyan-950/50 text-sky-900 dark:text-cyan-200'
+                        : 'border-sky-300 dark:border-cyan-500/50 bg-sky-50/70 dark:bg-slate-900 text-sky-700 dark:text-cyan-400 underline decoration-dotted'
                     }`}
                   >
                     {userInputs[bIdx] || `【 空格 ${bIdx} 】`}
@@ -243,13 +241,13 @@ export const FillBlankExercise: React.FC<FillBlankExerciseProps> = ({
 
         {/* Input Fields for Each Blank */}
         <div className="space-y-4 mb-6">
-          <div className="text-xs font-mono text-slate-400 flex items-center justify-between">
+          <div className="text-xs sm:text-sm font-mono font-semibold text-slate-600 dark:text-slate-400 flex items-center justify-between">
             <span>請輸入填入的詞語：</span>
             <button
               onClick={() => setShowHint(!showHint)}
-              className="text-cyan-400 hover:text-cyan-300 flex items-center gap-1 text-[11px]"
+              className="text-sky-600 dark:text-cyan-400 hover:text-sky-700 dark:hover:text-cyan-300 flex items-center gap-1.5 text-xs font-semibold cursor-pointer p-1"
             >
-              <KeyRound className="h-3.5 w-3.5" />
+              <KeyRound className="h-4 w-4" />
               <span>{showHint ? '隱藏快捷詞庫' : '開啟快捷詞庫輔助'}</span>
             </button>
           </div>
@@ -260,25 +258,25 @@ export const FillBlankExercise: React.FC<FillBlankExerciseProps> = ({
               return (
                 <div
                   key={b.index}
-                  className={`p-3.5 rounded-xl border transition-all ${
+                  className={`p-4 sm:p-5 rounded-2xl border transition-all option-btn ${
                     isAnswered
                       ? bResult
-                        ? 'border-emerald-500/70 bg-emerald-950/30'
-                        : 'border-rose-500/70 bg-rose-950/30'
-                      : 'border-slate-800 bg-slate-800/40 hover:border-cyan-500/50'
+                        ? 'border-emerald-400 bg-emerald-50/80 dark:bg-emerald-950/30'
+                        : 'border-rose-400 bg-rose-50/80 dark:bg-rose-950/30'
+                      : 'border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 hover:border-sky-400'
                   }`}
                 >
-                  <label className="text-xs font-mono text-cyan-300 block mb-1.5 flex items-center justify-between">
+                  <label className="text-xs sm:text-sm font-mono text-sky-700 dark:text-cyan-300 block mb-2 font-bold flex items-center justify-between">
                     <span>空格 {b.index}：</span>
                     {isAnswered && (
-                      <span className="text-[11px] font-sans">
+                      <span className="text-xs font-sans">
                         {bResult ? (
-                          <span className="text-emerald-400 flex items-center gap-1">
-                            <CheckCircle2 className="h-3.5 w-3.5 inline" /> 正確
+                          <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-bold">
+                            <CheckCircle2 className="h-4 w-4 inline" /> 正確
                           </span>
                         ) : (
-                          <span className="text-rose-400 flex items-center gap-1">
-                            <XCircle className="h-3.5 w-3.5 inline" /> 正解：
+                          <span className="text-rose-600 dark:text-rose-400 flex items-center gap-1 font-bold">
+                            <XCircle className="h-4 w-4 inline" /> 正解：
                             {b.acceptableAnswers.join(' / ')}
                           </span>
                         )}
@@ -296,26 +294,26 @@ export const FillBlankExercise: React.FC<FillBlankExerciseProps> = ({
                         if (e.key === 'Enter') handleCheck();
                       }}
                       placeholder={`請輸入空格 ${b.index} 答案...`}
-                      className={`w-full px-3 py-2 rounded-lg bg-slate-950 border text-white text-sm font-medium focus:outline-none transition-all ${
+                      className={`w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-950 border text-slate-900 dark:text-white text-base font-medium focus:outline-none transition-all min-h-[48px] ${
                         isAnswered
                           ? bResult
-                            ? 'border-emerald-500 text-emerald-300'
-                            : 'border-rose-500 text-rose-300'
-                          : 'border-slate-700 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400'
+                            ? 'border-emerald-500 text-emerald-800 dark:text-emerald-300'
+                            : 'border-rose-500 text-rose-800 dark:text-rose-300'
+                          : 'border-slate-300 dark:border-slate-700 focus:border-sky-500 focus:ring-2 focus:ring-sky-200 dark:focus:ring-cyan-900'
                       }`}
                     />
                   </div>
 
                   {/* Quick-fill helper chips if opened */}
                   {showHint && !isAnswered && (
-                    <div className="mt-2.5 pt-2 border-t border-slate-800 flex flex-wrap gap-1.5">
-                      <span className="text-[10px] text-slate-500 font-mono w-full">點選填入：</span>
+                    <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 flex flex-wrap gap-2">
+                      <span className="text-xs text-slate-500 dark:text-slate-400 font-mono w-full">點選填入：</span>
                       {getHelperChips().map((chip, cIdx) => (
                         <button
                           key={cIdx}
                           type="button"
                           onClick={() => handleQuickFill(b.index, chip)}
-                          className="px-2 py-0.5 rounded border border-cyan-500/30 bg-cyan-950/40 hover:bg-cyan-900/60 text-cyan-300 text-xs font-sans transition-colors cursor-pointer"
+                          className="px-3 py-1.5 rounded-xl border border-sky-300 dark:border-cyan-500/30 bg-sky-50 dark:bg-cyan-950/40 hover:bg-sky-100 dark:hover:bg-cyan-900/60 text-sky-800 dark:text-cyan-300 text-xs sm:text-sm font-semibold transition-colors cursor-pointer min-h-[36px] active:scale-95"
                         >
                           {chip}
                         </button>
@@ -329,31 +327,31 @@ export const FillBlankExercise: React.FC<FillBlankExerciseProps> = ({
         </div>
 
         {/* Footer Submit / Next */}
-        <div className="border-t border-slate-800 pt-5 flex flex-wrap items-center justify-between gap-4">
+        <div className="border-t border-slate-200 dark:border-slate-800 pt-6 flex flex-wrap items-center justify-between gap-4">
           {!isAnswered ? (
             <button
               onClick={handleCheck}
               disabled={Object.keys(userInputs).length === 0}
-              className={`w-full sm:w-auto px-6 py-3 rounded-xl font-bold font-mono text-sm flex items-center justify-center gap-2 transition-all ${
+              className={`w-full sm:w-auto px-7 py-3.5 rounded-xl font-bold font-mono text-base flex items-center justify-center gap-2 transition-all min-h-[50px] ${
                 Object.keys(userInputs).length > 0
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 hover:brightness-110 shadow-[0_0_20px_rgba(6,182,212,0.4)] cursor-pointer'
-                  : 'bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed'
+                  ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:brightness-105 shadow-md cursor-pointer active:scale-[0.98]'
+                  : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border border-slate-300 dark:border-slate-700 cursor-not-allowed'
               }`}
             >
-              <Zap className="h-4 w-4" />
+              <Zap className="h-5 w-5 fill-white" />
               <span>注入代碼驗證 (CHECK)</span>
             </button>
           ) : (
             <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 {isAllCorrect ? (
-                  <div className="flex items-center gap-2 text-emerald-400 font-bold">
+                  <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-base">
                     <CheckCircle2 className="h-6 w-6" />
                     <span>全部空格正確！獲得 +120 EXP</span>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-2 text-rose-400 font-bold">
-                    <XCircle className="h-6 w-6" />
+                  <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-bold text-sm sm:text-base">
+                    <XCircle className="h-6 w-6 flex-shrink-0" />
                     <span>
                       部分空格需加強！正解：
                       {currentQ.blanks.map((b) => b.acceptableAnswers.join('/')).join('，')}
@@ -364,10 +362,10 @@ export const FillBlankExercise: React.FC<FillBlankExerciseProps> = ({
 
               <button
                 onClick={handleNext}
-                className="w-full sm:w-auto px-6 py-2.5 rounded-xl font-bold font-mono text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 hover:brightness-110 shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-7 py-3 rounded-xl font-bold font-mono text-base bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 hover:brightness-105 shadow-md flex items-center justify-center gap-2 cursor-pointer min-h-[48px] active:scale-[0.98]"
               >
                 <span>{currentIndex + 1 < questions.length ? '下一任務' : '結算任務'}</span>
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="h-5 w-5" />
               </button>
             </div>
           )}
